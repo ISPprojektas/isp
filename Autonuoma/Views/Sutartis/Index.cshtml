@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.SutartisListVM>
+@{
+	ViewData["title"] = "Sutartys";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Create")" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Sukurti naują</a>
+	</span>
+</div>
+
+<div class="d-flex justify-content-center">
+	<table class="entitylist table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.ID)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Data)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Kaina)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Busena)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.FkDarbuotojas)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.FkKlientas)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.FkGyvunas)
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model) {
+			<tr>
+				<td>
+					@Html.DisplayFor(model => item.ID)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.Data)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.Kaina)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.Busena)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.FkDarbuotojas)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.FkKlientas)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.FkGyvunas)
+				</td>
+				<td>
+					<a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
+					<a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+</div>

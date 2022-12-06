@@ -1,0 +1,76 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.SutartisEditVM
+
+@{
+	ViewData["title"] = "Sutarties sukūrimas";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+	<fieldset class="border rounded shadow p-2">
+		<div class="form-group">
+			@Html.LabelFor(m => m.Sutartis.ID, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Sutartis.ID, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Sutartis.ID, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Sutartis.Data, new { @class = "control-label" })
+			@Html.TextBoxFor(m => m.Sutartis.Data, "{0:yyyy-MM-dd}", new { @class = "form-control date-picker"})
+			@Html.ValidationMessageFor(m => m.Sutartis.Data, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Sutartis.Kaina, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Sutartis.Kaina, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Sutartis.Kaina, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Sutartis.Busena, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Sutartis.Busena, Model.Lists.Busenos, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Sutartis.Busena, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Sutartis.FkDarbuotojas, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Sutartis.FkDarbuotojas, Model.Lists.Darbuotojai, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Sutartis.FkDarbuotojas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Sutartis.FkKlientas, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Sutartis.FkKlientas, Model.Lists.Klientai, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Sutartis.FkKlientas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Sutartis.FkGyvunas, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Sutartis.FkGyvunas, Model.Lists.Gyvunai, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Sutartis.FkGyvunas, "", new { @class = "text-danger" })
+		</div>
+	</fieldset>
+
+	<div class="container-fluid d-flex d-row justify-content-end">
+		<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+	</div>
+}
+</div>
+
+<div class="main-content-footer container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title"></span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>

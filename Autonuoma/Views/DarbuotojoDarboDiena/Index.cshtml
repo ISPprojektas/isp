@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Org.Ktu.Isk.P175B602.Autonuoma.Models.DarbuotojoDarboDiena>
+@{
+	ViewData["title"] = "Darbuotojo darbo dienos";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Create")" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Sukurti naują</a>
+	</span>
+</div>
+
+<div class="d-flex justify-content-center">
+	<table class="entitylist table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.ID)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.DarboPradzia)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.DarboPabaiga)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.FkDarboDiena)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.FkDarbuotojas)
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model) {
+			<tr>
+				<td>
+					@Html.DisplayFor(model => item.ID)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.DarboPradzia)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.DarboPabaiga)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.FkDarboDienaToString)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.FkDarbuotojasToString)
+				</td>
+				<td>
+					<a href="@Url.Action("Edit", new { id=item.ID })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
+					<a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+</div>

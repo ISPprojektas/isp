@@ -1,0 +1,171 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.DarbuotojasEditVM
+
+@{
+	ViewData["title"] = "Darbuotojo redagavimas";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+	<fieldset class="border rounded shadow p-2">
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.AsmensKodas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Darbuotojas.AsmensKodas, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.AsmensKodas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.Vardas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Darbuotojas.Vardas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.Vardas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.Pavarde, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Darbuotojas.Pavarde, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.Pavarde, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.GimimoData, new { @class = "control-label" })
+			@Html.TextBoxFor(m => m.Darbuotojas.GimimoData, "{0:yyyy-MM-dd}", new { @class = "form-control date-picker"})
+			@Html.ValidationMessageFor(m => m.Darbuotojas.GimimoData, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.PasamdymoData, new { @class = "control-label" })
+			@Html.TextBoxFor(m => m.Darbuotojas.PasamdymoData, "{0:yyyy-MM-dd}", new { @class = "form-control date-picker"})
+			@Html.ValidationMessageFor(m => m.Darbuotojas.PasamdymoData, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.Telefonas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Darbuotojas.Telefonas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.Telefonas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.EPastas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Darbuotojas.EPastas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.EPastas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.Adresas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Darbuotojas.Adresas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.Adresas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.Pareigos, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Darbuotojas.Pareigos, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.Pareigos, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.Lytis, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Darbuotojas.Lytis, Model.Lists.Lytys, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.Lytis, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.FkMiestas, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Darbuotojas.FkMiestas, Model.Lists.Miestai, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.FkMiestas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Darbuotojas.FkParduotuve, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Darbuotojas.FkParduotuve, Model.Lists.Darbovietes, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Darbuotojas.FkParduotuve, "", new { @class = "text-danger" })
+		</div>
+	</fieldset>
+
+	<fieldset class="border rounded shadow p-2">
+		<div class="container-fluid d-flex d-row justify-content-between align-items-center">
+			<span></span>
+			<legend style="width: unset; margin-bottom: 0px;">Papildoma informacija</legend>
+			<button
+				name="add"
+				value="1"
+				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+				formaction="@Url.Action()#listEnd"
+				class="btn btn-info"
+				style="white-space: nowrap;"
+			><i class="fa-solid fa-plus"></i> Pridėti darbo laiką</button>
+		</div>
+
+		<table class="table table-striped table-hover w-100">
+			<thead>
+				<tr>
+					<th>Darbo diena</th>
+					<th>Darbo pradžia</th>
+					<th>Darbo pabaiga</th>
+					<th style="width: 1px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				@for( var i = 0; i < Model.DarboDienos.Count; i++ ) {
+				<tr>
+					@Html.HiddenFor(m => m.DarboDienos[i].ID)
+					@Html.HiddenFor(m => m.DarboDienos[i].FkDarbuotojas)
+					<td>
+						@Html.DropDownListFor(
+							m => m.DarboDienos[i].FkDarboDiena, 
+							Model.Lists.DarboDienos, 
+							"--------------", 
+							new { @class = "form-control" }
+						)
+						@Html.ValidationMessageFor(m => m.DarboDienos[i].FkDarboDiena , "", new { @class = "text-danger" })
+					</td>
+					<td>
+						@Html.EditorFor(m => m.DarboDienos[i].DarboPradzia, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(m => m.DarboDienos[i].DarboPradzia, "", new { @class = "text-danger" })
+					</td>
+					<td>
+						@Html.EditorFor(m => m.DarboDienos[i].DarboPabaiga, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(m => m.DarboDienos[i].DarboPabaiga, "",  new { @class = "text-danger" })
+					</td>
+				
+					<td>
+						<button
+							name="remove"
+							value="@Model.DarboDienos[i].ID"
+							formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+							formaction="@Url.Action()#listEnd"
+							class="btn btn-danger"
+							style="white-space: nowrap;"
+						><i class="fa-solid fa-trash"></i> Šalinti</button>
+					</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+
+		@* this is used as a marker to automatically scroll down to the end of items list when returning from button presses *@
+		<span id="listEnd"></span>
+	</fieldset>
+
+	<div class="container-fluid d-flex d-row justify-content-end">
+		<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+	</div>
+}
+</div>
+
+<div class="main-content-footer container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title"></span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>

@@ -1,0 +1,272 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.GyvunasEditVM
+
+@{
+	ViewData["title"] = "Gyvūno sukūrimas";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+	<fieldset class="border rounded shadow p-2">
+		<div class="form-group">
+			@Html.LabelFor(m => m.Gyvunas.ID, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Gyvunas.ID, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Gyvunas.ID, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Gyvunas.Vardas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Gyvunas.Vardas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Gyvunas.Vardas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Gyvunas.GimimoData, new { @class = "control-label" })
+			@Html.TextBoxFor(m => m.Gyvunas.GimimoData, "{0:yyyy-MM-dd}", new { @class = "form-control date-picker"})
+			@Html.ValidationMessageFor(m => m.Gyvunas.GimimoData, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Gyvunas.Svoris, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Gyvunas.Svoris, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Gyvunas.Svoris, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Gyvunas.Kaina, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Gyvunas.Kaina, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Gyvunas.Kaina, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Gyvunas.FkLytis, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Gyvunas.FkLytis, Model.Lists.Lytys, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Gyvunas.FkLytis, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Gyvunas.FkRusis, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Gyvunas.FkRusis, Model.Lists.Rusys, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Gyvunas.FkRusis, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Gyvunas.FkDydis, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Gyvunas.FkDydis, Model.Lists.Dydziai, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Gyvunas.FkDydis, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Gyvunas.FkParduotuve, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Gyvunas.FkParduotuve, Model.Lists.Parduotuves, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Gyvunas.FkParduotuve, "", new { @class = "text-danger" })
+		</div>
+	</fieldset>
+
+	<fieldset class="border rounded shadow p-2">
+		<div class="container-fluid d-flex d-row justify-content-between align-items-center">
+			<span></span>
+			<legend style="width: unset; margin-bottom: 0px;">Papildoma informacija</legend>
+			<button
+				name="aadd"
+				value="1"
+				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+				formaction="@Url.Action()#listEnd"
+				class="btn btn-info"
+				style="white-space: nowrap;"
+			><i class="fa-solid fa-plus"></i> Pridėti alergiją</button>
+			<button
+				name="madd"
+				value="1"
+				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+				formaction="@Url.Action()#listEnd"
+				class="btn btn-info"
+				style="white-space: nowrap;"
+			><i class="fa-solid fa-plus"></i> Pridėti vaistus</button>
+			<button
+				name="vadd"
+				value="1"
+				formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+				formaction="@Url.Action()#listEnd"
+				class="btn btn-info"
+				style="white-space: nowrap;"
+			><i class="fa-solid fa-plus"></i> Pridėti vakcinaciją</button>
+		</div>
+
+		<table class="table table-striped table-hover w-100">
+			<thead>
+				<tr>
+					<th>Alergija</th>
+					<th>Nustatymo data</th>
+					<th>Nustatęs darbuotojas</th>
+					<th style="width: 1px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				@for( var i = 0; i < Model.Alergijos.Count; i++ ) {
+				<tr>
+					<td>
+						@Html.EditorFor(m => m.Alergijos[i].Pavadinimas, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(m => m.Alergijos[i].Pavadinimas, "", new { @class = "text-danger" })
+					</td>
+					<td>
+						@Html.TextBoxFor(m => m.Alergijos[i].NustatymoData, "{0:yyyy-MM-dd}", new { @class = "form-control date-picker"})
+						@Html.ValidationMessageFor(m => m.Alergijos[i].NustatymoData, "", new { @class = "text-danger" })
+					</td>
+					
+					<td>
+						@* add hidden form fields for non-visible properties, otherwise they will get lost in code that handles button presses *@
+						@Html.HiddenFor(m => m.Alergijos[i].ID)
+						@Html.HiddenFor(m => m.Alergijos[i].FkGyvunas)
+
+						@Html.DropDownListFor(
+							m => m.Alergijos[i].FkDarbuotojas, 
+							Model.Lists.Darbuotojai, 
+							"--------------", 
+							new { @class = "form-control" }
+						)
+						@Html.ValidationMessageFor(m => m.Alergijos[i].FkDarbuotojas , "", new { @class = "text-danger" })
+					</td>
+					<td>
+						<button
+							name="aremove"
+							value="@Model.Alergijos[i].ID"
+							formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+							formaction="@Url.Action()#listEnd"
+							class="btn btn-danger"
+							style="white-space: nowrap;"
+						><i class="fa-solid fa-trash"></i> Šalinti</button>
+					</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+
+		<table class="table table-striped table-hover w-100">
+			<thead>
+				<tr>
+					<th>Vaistas</th>
+					<th>Išrašymo data</th>
+					<th>Kaina</th>
+					<th>Išrašęs darbuotojas</th>
+					<th style="width: 1px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				@for( var i = 0; i < Model.Vaistai.Count; i++ ) {
+				<tr>
+					<td>
+						@Html.EditorFor(m => m.Vaistai[i].Pavadinimas, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(m => m.Vaistai[i].Pavadinimas, "", new { @class = "text-danger" })
+					</td>
+					<td>
+						@Html.TextBoxFor(m => m.Vaistai[i].NustatymoData, "{0:yyyy-MM-dd}", new { @class = "form-control date-picker"})
+						@Html.ValidationMessageFor(m => m.Vaistai[i].NustatymoData, "", new { @class = "text-danger" })
+					</td>
+					<td>
+						@Html.EditorFor(m => m.Vaistai[i].Kaina, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(m => m.Vaistai[i].Kaina, "", new { @class = "text-danger" })
+					</td>
+					<td>
+						@* add hidden form fields for non-visible properties, otherwise they will get lost in code that handles button presses *@
+						@Html.HiddenFor(m => m.Vaistai[i].ID)
+						@Html.HiddenFor(m => m.Vaistai[i].FkGyvunas)
+
+						@Html.DropDownListFor(
+							m => m.Vaistai[i].FkDarbuotojas, 
+							Model.Lists.Darbuotojai, 
+							"--------------", 
+							new { @class = "form-control" }
+						)
+						@Html.ValidationMessageFor(m => m.Vaistai[i].FkDarbuotojas , "", new { @class = "text-danger" })
+					</td>
+					<td>
+						<button
+							name="mremove"
+							value="@Model.Vaistai[i].ID"
+							formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+							formaction="@Url.Action()#listEnd"
+							class="btn btn-danger"
+							style="white-space: nowrap;"
+						><i class="fa-solid fa-trash"></i> Šalinti</button>
+					</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+
+		<table class="table table-striped table-hover w-100">
+			<thead>
+				<tr>
+					<th>Vakcinacija</th>
+					<th>Vakcinacijos data</th>
+					<th>Vakcinavęs darbuotojas</th>
+					<th style="width: 1px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				@for( var i = 0; i < Model.Vakcinacijos.Count; i++ ) {
+				<tr>
+					<td>
+						@Html.EditorFor(m => m.Vakcinacijos[i].Pavadinimas, new { htmlAttributes = new { @class = "form-control" } })
+						@Html.ValidationMessageFor(m => m.Vakcinacijos[i].Pavadinimas, "", new { @class = "text-danger" })
+					</td>
+					<td>
+						@Html.TextBoxFor(m => m.Vakcinacijos[i].NustatymoData, "{0:yyyy-MM-dd}", new { @class = "form-control date-picker"})
+						@Html.ValidationMessageFor(m => m.Vakcinacijos[i].NustatymoData, "", new { @class = "text-danger" })
+					</td>
+					<td>
+						@* add hidden form fields for non-visible properties, otherwise they will get lost in code that handles button presses *@
+						@Html.HiddenFor(m => m.Vakcinacijos[i].ID)
+						@Html.HiddenFor(m => m.Vakcinacijos[i].FkGyvunas)
+
+						@Html.DropDownListFor(
+							m => m.Vakcinacijos[i].FkDarbuotojas, 
+							Model.Lists.Darbuotojai, 
+							"--------------", 
+							new { @class = "form-control" }
+						)
+						@Html.ValidationMessageFor(m => m.Vakcinacijos[i].FkDarbuotojas , "", new { @class = "text-danger" })
+					</td>
+					<td>
+						<button
+							name="vremove"
+							value="@Model.Vakcinacijos[i].ID"
+							formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
+							formaction="@Url.Action()#listEnd"
+							class="btn btn-danger"
+							style="white-space: nowrap;"
+						><i class="fa-solid fa-trash"></i> Šalinti</button>
+					</td>
+				</tr>
+				}
+			</tbody>
+		</table>
+
+		@* this is used as a marker to automatically scroll down to the end of items list when returning from button presses *@
+		<span id="listEnd"></span>
+	</fieldset>
+
+	<div class="container-fluid d-flex d-row justify-content-end">
+		<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+	</div>
+}
+</div>
+
+<div class="main-content-footer container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title"></span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>

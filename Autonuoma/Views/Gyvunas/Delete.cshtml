@@ -1,0 +1,76 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.GyvunasListVM
+@{
+	ViewData["title"] = "Gyvūno šalinimas";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm()) 
+{
+	@Html.AntiForgeryToken()
+
+	<fieldset class="border rounded shadow p-2">
+		<legend class="text-center">Ar tikrai norite šalinti šį gyvūną?</legend>
+
+		<dl>
+			<dt>@Html.DisplayNameFor(m => m.ID)</dt>
+			<dd>@Html.DisplayFor(m => m.ID)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.Vardas)</dt>
+			<dd>@Html.DisplayFor(m => m.Vardas)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.GimimoData)</dt>
+			<dd>@Html.DisplayFor(m => m.GimimoData)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.Svoris)</dt>
+			<dd>@Html.DisplayFor(m => m.Svoris)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.Kaina)</dt>
+			<dd>@Html.DisplayFor(m => m.Kaina)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.FkLytis)</dt>
+			<dd>@Html.DisplayFor(m => m.FkLytis)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.FkDydis)</dt>
+			<dd>@Html.DisplayFor(m => m.FkDydis)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.FkRusis)</dt>
+			<dd>@Html.DisplayFor(m => m.FkRusis)</dd>
+
+			<dt>@Html.DisplayNameFor(m => m.FkParduotuve)</dt>
+			<dd>@Html.DisplayFor(m => m.FkParduotuve)</dd>
+		</dl>
+
+		@if( ViewData["deletionNotPermitted"] != null )
+		{
+			<div class="alert alert-warning text-center">
+				<i class="fa-solid fa-circle-exclamation"></i> Šios gyvūno esybės trinti negalima, nes 
+				ji turi ryšių į priklausomas esybes.
+			</div>
+		}
+		else
+		{
+			<div class="container-fluid d-flex d-row justify-content-end">
+				<button
+					formaction="@Url.Action("DeleteConfirm", new {id = Model.ID})"
+					class="btn btn-danger"
+					style="white-space: nowrap;"
+				><i class="fa-solid fa-trash"></i> Šalinti</button>
+			</div>			
+		}
+	</fieldset>
+}
+</div>
+
+<div class="main-content-footer container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title"></span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
