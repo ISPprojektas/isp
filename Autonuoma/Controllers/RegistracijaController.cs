@@ -11,19 +11,14 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 	/// <summary>
 	/// Controller for working with 'Modelis' entity.
 	/// </summary>
-	public class AtaskaitaController : Controller
+	public class RegistracijaController : Controller
 	{
 
 		/// <summary>
 		/// This is invoked when either 'Index' action is requested or no action is provided.
 		/// </summary>
 		/// <returns>Entity list view.</returns>
-		public ActionResult Generate()
-		{
-			return View();
-		}
-
-		public ActionResult Report()
+		public ActionResult Index()
 		{
 			return View();
 		}

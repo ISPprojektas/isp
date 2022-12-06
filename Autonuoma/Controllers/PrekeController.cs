@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 using Org.Ktu.Isk.P175B602.Autonuoma.Repositories;
@@ -11,8 +11,12 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 	/// <summary>
 	/// Controller for working with 'Modelis' entity.
 	/// </summary>
-	public class KlientasController : Controller
+	public class PrekeController : Controller
 	{
+        public ActionResult Buy()
+		{
+			return View();
+		}
 
 		/// <summary>
 		/// This is invoked when either 'Index' action is requested or no action is provided.

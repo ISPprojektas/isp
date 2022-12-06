@@ -1,4 +1,4 @@
-﻿namespace Autonuoma.Model
+﻿namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
 {
     public class Kategorijos
     {

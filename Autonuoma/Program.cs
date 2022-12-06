@@ -70,6 +70,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma
                 Config.CreateSingletonInstance(app.Configuration);
 
 				//
+				app.UseDefaultFiles();
                 app.UseStaticFiles();
                 app.UseRouting();
                 app.UseAuthorization();

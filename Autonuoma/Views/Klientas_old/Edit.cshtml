@@ -1,0 +1,88 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.KlientasEditVM
+
+@{
+	ViewData["title"] = "Kliento redagavimas";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+	<fieldset class="border rounded shadow p-2">
+		<div class="form-group">
+			@Html.LabelFor(m => m.Klientas.AsmensKodas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Klientas.AsmensKodas, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+			@Html.ValidationMessageFor(m => m.Klientas.AsmensKodas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Klientas.Vardas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Klientas.Vardas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Klientas.Vardas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Klientas.Pavarde, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Klientas.Pavarde, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Klientas.Pavarde, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Klientas.GimimoData, new { @class = "control-label" })
+			@Html.TextBoxFor(m => m.Klientas.GimimoData, "{0:yyyy-MM-dd}", new { @class = "form-control date-picker"})
+			@Html.ValidationMessageFor(m => m.Klientas.GimimoData, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Klientas.Telefonas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Klientas.Telefonas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Klientas.Telefonas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Klientas.EPastas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Klientas.EPastas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Klientas.EPastas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Klientas.Adresas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Klientas.Adresas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Klientas.Adresas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Klientas.Lytis, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Klientas.Lytis, Model.Lists.Lytys, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Klientas.Lytis, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Klientas.FkMiestas, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Klientas.FkMiestas, Model.Lists.Miestai, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Klientas.FkMiestas, "", new { @class = "text-danger" })
+		</div>
+	</fieldset>
+
+	<div class="container-fluid d-flex d-row justify-content-end">
+		<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+	</div>
+}
+</div>
+
+<div class="main-content-footer container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title"></span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>

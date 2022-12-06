@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 using Org.Ktu.Isk.P175B602.Autonuoma.Repositories;
@@ -11,7 +11,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 	/// <summary>
 	/// Controller for working with 'Modelis' entity.
 	/// </summary>
-	public class KlientasController : Controller
+	public class UzsakymasController : Controller
 	{
 
 		/// <summary>
