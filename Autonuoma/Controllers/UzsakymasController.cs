@@ -69,9 +69,38 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 		/// </summary>
 		/// <param name="id">ID of the entity to delete.</param>
 		/// <returns>Deletion form view.</returns>
-		public ActionResult Delete(string id)
+		public ActionResult Delete(int id)
 		{
-			return View();
+			var UzsakymaiEVM = UzsakymaiRepo.FindForDeletion(id);
+			return View(UzsakymaiEVM);
+		}
+
+		/// <summary>
+		/// This is invoked when deletion is confirmed in deletion form
+		/// </summary>
+		/// <param name="id">ID of the entity to delete.</param>
+		/// <returns>Deletion form view on error, redirects to Index on success.</returns>
+		[HttpPost]
+		public ActionResult DeleteConfirm(int id)
+		{
+			//try deleting, this will fail if foreign key constraint fails
+			try
+			{
+				UzsakymaiRepo.Delete(id);
+
+				//deletion success, redired to list form
+				return RedirectToAction("Index");
+			}
+			//entity in use, deletion not permitted
+			catch( MySql.Data.MySqlClient.MySqlException )
+			{
+				//enable explanatory message and show delete form
+				ViewData["deletionNotPermitted"] = true;
+
+				var UzsakymaiEVM = UzsakymaiRepo.FindForDeletion(id);
+
+				return View("Delete", UzsakymaiEVM);
+			}
 		}
 	}
 }

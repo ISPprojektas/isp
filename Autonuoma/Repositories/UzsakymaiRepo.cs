@@ -191,28 +191,33 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 			}
 
 			return null;
-		}
+		}*/
 
-		public static uzsakymai FindForDeletion(int id)
+		public static Uzsakymai FindForDeletion(int id)
 		{
-			var a = new uzsakymai();
+			var a = new Uzsakymai();
 
 			var query =
 				$@"SELECT
-					vst.id,
-					vst.pavadinimas,
-                    vst.israsymo_data,
-                    vst.kaina,
-                    dar.asmens_kodas,
-                    dar.vardas AS dvardas,
-                    dar.pavarde,
-                    gyv.kodas,
-                    gyv.vardas
+                    uz.id,
+                    uz.Užsakymo_laikas,
+                    uz.Užsakymo_kaina,
+                    uz.Apmokėjimo_laikas,
+                    uz.Nuolaida,
+                    uz.Būsena,
+                    uz.fk_Naudotojas,
+                    uz.fk_Parduotuvė,
+                    nau.Vardas,
+                    nau.Pavardė,
+                    par.Pavadinimas,
+                    ub.name,
+                    ub.id AS ubid
 				FROM
-					`{Config.TblPrefix}medikacijos` vst
-					LEFT JOIN `{Config.TblPrefix}darbuotojai` dar ON vst.fk_DARBUOTOJASasmens_kodas=dar.asmens_kodas
-                    LEFT JOIN `{Config.TblPrefix}gyvunai` gyv ON vst.fk_GYVUNASkodas=gyv.kodas
-				WHERE vst.id=?id";
+					`{Config.TblPrefix}užsakymai` uz
+					LEFT JOIN `{Config.TblPrefix}naudotojai` nau ON uz.fk_Naudotojas=nau.id
+                    LEFT JOIN `{Config.TblPrefix}parduotuvės` par ON uz.fk_Parduotuvė=par.id
+                    LEFT JOIN `{Config.TblPrefix}užsakymo_būsenos` ub ON uz.Būsena=ub.id
+				WHERE uz.id=?id";
 
 			var dt =
 				Sql.Query(query, args => {
@@ -221,20 +226,23 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 
 			foreach( DataRow item in dt )
 			{
-				a.ID = Convert.ToInt32(item["id"]);
-                a.Pavadinimas = Convert.ToString(item["pavadinimas"]);
-                a.IsrasymoData = Convert.ToDateTime(item["israsymo_data"]);
-                a.Kaina = Convert.ToDouble(item["kaina"]);
-                a.FkDarbuotojas = Convert.ToString(item["asmens_kodas"]);
-                a.FkDarbuotojasToString = Convert.ToString(item["dvardas"]) + " " + Convert.ToString(item["pavarde"]);
-                a.FkGyvunas = Convert.ToString(item["kodas"]);
-                a.FkGyvunasToString = Convert.ToString(item["vardas"]);
+				a.pk_Id = Convert.ToInt32(item["id"]);
+                a.UzsakymoLaikas = Convert.ToDateTime(item["Užsakymo_laikas"]);
+                a.UzsakymoKaina = Convert.ToDouble(item["Užsakymo_kaina"]);
+                a.ApmokejimoLaikas = Convert.ToDateTime(item["Apmokėjimo_laikas"]);
+                a.Nuolaida = item["Nuolaida"] != DBNull.Value ? Convert.ToDouble(item["Nuolaida"]) : 0;
+                a.BusenaToString = Convert.ToString(item["name"]);
+                a.Busena = Convert.ToInt32(item["ubid"]);
+                a.fk_NaudotojasToString = Convert.ToString(item["Vardas"]) + " " + Convert.ToString(item["Pavardė"]);
+                a.fk_ParduotuveToString = Convert.ToString(item["Pavadinimas"]);
+                a.fk_Naudotojas = Convert.ToInt32(item["fk_Naudotojas"]);
+                a.fk_Parduotuve = Convert.ToInt32(item["fk_Parduotuvė"]);
 			}
 
 			return a;
 		}
 
-		public static void Insert(uzsakymaiEditVM uzsakymaiEVM)
+		/*public static void Insert(uzsakymaiEditVM uzsakymaiEVM)
 		{
 			var query =
 				$@"INSERT INTO `{Config.TblPrefix}medikacijos`
@@ -311,17 +319,17 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 				args.Add("?gyv", MySqlDbType.VarChar).Value = uzsakymaiEVM.uzsakymai.FkGyvunas;
 				args.Add("?id", MySqlDbType.Int32).Value = uzsakymaiEVM.uzsakymai.ID;
 			});
-		}
+		}*/
 
 		public static void Delete(int id)
 		{
-			var query = $@"DELETE FROM `{Config.TblPrefix}medikacijos` WHERE id=?id";
+			var query = $@"DELETE FROM `{Config.TblPrefix}užsakymai` WHERE id=?id";
 			Sql.Delete(query, args => {
 				args.Add("?id", MySqlDbType.Int32).Value = id;
 			});
 		}
 
-		public static void DeleteForGyvunas(string id)
+		/*public static void DeleteForGyvunas(string id)
 		{
 			var query =
 				$@"DELETE FROM `{Config.TblPrefix}medikacijos`

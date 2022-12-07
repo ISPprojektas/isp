@@ -1,3 +1,23 @@
+@{
+	/// <summary>
+	/// Helper for marking active links in main menu.
+	/// </summary>
+	/// <param name="ctrl">Controller to look for.</param>
+	/// <param name="act">Action to look for. Pass null if action does not matter.</param>
+	/// <returns>If controller and (optionally) action match given ones returns "active". Returns empty string otherwise.</returns>
+	string MarkActive(string ctrl, string act = null)
+	{
+		//get current controller and action
+		var curCtrl = (string)ViewContext.RouteData.Values["Controller"];
+		var curAct = (string)ViewContext.RouteData.Values["Action"];
+
+		//compare to given ones
+		if( curCtrl == ctrl && (act == null || curAct == act) )
+			return "active";
+		return "";
+	}
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +36,14 @@
         <p>Kliento naikinimo puslapis</p>
         <a asp-action="Delete" asp-controller="Klientas">Kliento naikinimas</a>
         <br></br>
-        <p>Užsakymo peržiūros puslapis</p>
-        <a asp-action="Index" asp-controller="Uzsakymas">Užsakymo peržiūra</a>
+        <p>Užsakymų peržiūros puslapis</p>
+        <div class="main-content-footer container-fluid d-flex d-row align-items-center">
+            <span class="title"></span>
+            <span class="actions">
+                <a href="@Url.Action("Index", "Uzsakymas")" class="link-primary"><i class="fa-solid fa-angles-right"></i> Užsakymai</a>
+            </span>
+        </div>
+        
       </div>
 </body>
 </html>

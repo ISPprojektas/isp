@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
 {
@@ -48,5 +49,12 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
         public string fk_ParduotuveToString { get; set; }
 
         public List<UzsakymoPrekes> uzsakymoPrekes = new List<UzsakymoPrekes>();
+        public List<UzsakymoBusenos> busenos = new List<UzsakymoBusenos>();
+
+        public class ListsM
+		{
+			public IList<SelectListItem> Busenos { get; set; }
+		}
+        public ListsM Lists { get; set; } = new ListsM();
     }
 }

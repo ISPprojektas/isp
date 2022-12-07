@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Org.Ktu.Isk.P175B602.Autonuoma.Model.Uzsakymai>
-
+@{
+    ViewData["title"] = "Užsakymų peržiūra";
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +16,7 @@
 	</div>
         <a href="/">Pagrindinis</a>
         <div class="d-flex justify-content-center">
-	<table class="entitylist table table-striped table-hover">
+	<table class="entitylist table table-striped table-responsive table-hover">
 		<thead>
 			<tr>
 				<th>
@@ -41,9 +43,12 @@
                                 <th>
 					@Html.DisplayNameFor(model => model.fk_Parduotuve)
 				</th>
-                                <th colspan="2">
-					Redaguoti / Šalinti
+                                <th>
+					Redaguoti
 				</th>
+                                <th>
+                                        Šalinti 
+                                </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -75,17 +80,26 @@
 				</td>
 				<td>
 					<a href="@Url.Action("Edit", new { id=item.pk_Id })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
-					<a href="@Url.Action("Delete", new { id=item.pk_Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
 				</td>
+                                <td>
+                                        <a href="@Url.Action("Delete", new { id=item.pk_Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+                                </td>
 			</tr>
                         <tr>
-                                <th colspan="4">Užsakymo prekės:</th>
+                                <td>Užsakymo prekės:</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                         </tr>
                         <tr>
-                                <td>Prekės pavadinimas</td>
-                                <td>Prekės kiekis</td>
+                                <td>Pavadinimas</td>
+                                <td>Kiekis</td>
                                 <td>Vieneto kaina</td>
                                 <td>Kaina</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                         </tr>
                         @foreach (var el in item.uzsakymoPrekes)
                         {
@@ -102,6 +116,12 @@
                                         <td>
                                                 @Html.DisplayFor(model => el.Kaina)
                                         </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                 </tr>
                         }
 			}
