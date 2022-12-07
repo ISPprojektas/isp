@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<Org.Ktu.Isk.P175B602.Autonuoma.Model.Uzsakymai>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -8,13 +10,103 @@
 </head>
 <body>
 	<div>
-        <p>Užsakymo peržiūros puslapis</p>
-        <br></br>
-        <p>Užsakymo atnaujinimo puslapis</p>
-        <a asp-action="Edit" asp-controller="Uzsakymas">Užsakymo atnaujinimas</a>
-        <br></br>
-        <p>Užsakymo naikinimo puslapis</p>
-        <a asp-action="Delete" asp-controller="Uzsakymas">Užsakymo naikinimas</a>
+        <h2><center>Užsakymų peržiūros puslapis</center></h2>
 	</div>
+        <a href="/">Pagrindinis</a>
+        <div class="d-flex justify-content-center">
+	<table class="entitylist table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.pk_Id)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.UzsakymoLaikas)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.UzsakymoKaina)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.ApmokejimoLaikas)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Nuolaida)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Busena)
+				</th>
+                                <th>
+					@Html.DisplayNameFor(model => model.fk_Naudotojas)
+				</th>
+                                <th>
+					@Html.DisplayNameFor(model => model.fk_Parduotuve)
+				</th>
+                                <th colspan="2">
+					Redaguoti / Šalinti
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model) {
+			<tr>
+				<td>
+					@Html.DisplayFor(model => item.pk_Id)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.UzsakymoLaikas)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.UzsakymoKaina)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.ApmokejimoLaikas)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.Nuolaida)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.BusenaToString)
+				</td>
+                                <td>
+					@Html.DisplayFor(model => item.fk_NaudotojasToString)
+				</td>
+                                <td>
+					@Html.DisplayFor(model => item.fk_ParduotuveToString)
+				</td>
+				<td>
+					<a href="@Url.Action("Edit", new { id=item.pk_Id })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
+					<a href="@Url.Action("Delete", new { id=item.pk_Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+				</td>
+			</tr>
+                        <tr>
+                                <th colspan="4">Užsakymo prekės:</th>
+                        </tr>
+                        <tr>
+                                <td>Prekės pavadinimas</td>
+                                <td>Prekės kiekis</td>
+                                <td>Vieneto kaina</td>
+                                <td>Kaina</td>
+                        </tr>
+                        @foreach (var el in item.uzsakymoPrekes)
+                        {
+                                <tr>
+                                        <td>
+                                                @Html.DisplayFor(model => el.fk_PrekeToString)
+                                        </td>
+                                        <td>
+                                                @Html.DisplayFor(model => el.PrekesKiekis)
+                                        </td>
+                                        <td>
+                                                @Html.DisplayFor(model => el.VienetoKaina)
+                                        </td>
+                                        <td>
+                                                @Html.DisplayFor(model => el.Kaina)
+                                        </td>
+                                </tr>
+                        }
+			}
+		</tbody>
+	</table>
+        </div>
 </body>
 </html>

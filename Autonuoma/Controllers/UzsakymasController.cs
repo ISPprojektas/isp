@@ -20,7 +20,8 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 		/// <returns>Entity list view.</returns>
 		public ActionResult Index()
 		{
-			return View();
+			var uzsakymai = UzsakymaiRepo.List();
+			return View(uzsakymai);
 		}
 
 		/// <summary>
