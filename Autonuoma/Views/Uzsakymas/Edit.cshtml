@@ -27,13 +27,13 @@
 
 		<div class="form-group">
 			@Html.LabelFor(m => m.UzsakymoLaikas, new { @class = "control-label" })
-			@Html.TextBoxFor(m => m.UzsakymoLaikas, "{0:yyyy-MM-dd hh:mm:ss}", new { @class = "form-control date-picker"})
+			@Html.EditorFor(m => m.UzsakymoLaikas, new { htmlAttributes = new { @class = "form-control" } })
 			@Html.ValidationMessageFor(m => m.UzsakymoLaikas, "", new { @class = "text-danger" })
 		</div>
 
 		<div class="form-group">
 			@Html.LabelFor(m => m.UzsakymoKaina, new { @class = "control-label" })
-			@Html.TextBoxFor(m => m.UzsakymoKaina, "{0:yyyy-MM-dd}", new { @class = "form-control"})
+			@Html.TextBoxFor(m => m.UzsakymoKaina, new { @class = "form-control"})
 			@Html.ValidationMessageFor(m => m.UzsakymoKaina, "", new { @class = "text-danger" })
 		</div>
 

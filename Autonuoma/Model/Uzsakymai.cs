@@ -25,7 +25,6 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
         public int Busena { get; set; }
 
         [DisplayName("Parduotuvė")]
-		[Required]
         public string BusenaToString { get; set; }
 
         [DisplayName("ID")]
@@ -41,11 +40,9 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
         public int fk_Parduotuve { get; set; }
 
         [DisplayName("Naudotojas")]
-		[Required]
         public string fk_NaudotojasToString { get; set; }
 
         [DisplayName("Parduotuvė")]
-		[Required]
         public string fk_ParduotuveToString { get; set; }
 
         public List<UzsakymoPrekes> uzsakymoPrekes = new List<UzsakymoPrekes>();

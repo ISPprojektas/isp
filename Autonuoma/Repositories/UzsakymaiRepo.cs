@@ -162,38 +162,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 			return result;
 		}*/
 
-		/*public static uzsakymaiEditVM Find(int id)
-		{
-			var query = $@"SELECT * FROM `{Config.TblPrefix}medikacijos` uzsakymai
-            LEFT JOIN `{Config.TblPrefix}gyvunai` gyv ON uzsakymai.fk_GYVUNASkodas=gyv.kodas
-            WHERE id=?id";
-
-			var dt =
-				Sql.Query(query, args => {
-					args.Add("?id", MySqlDbType.Int32).Value = id;
-				});
-
-			if( dt.Count > 0 )
-			{
-				var aevm = new uzsakymaiEditVM();
-
-				foreach( DataRow item in dt )
-				{
-					aevm.uzsakymai.ID = Convert.ToInt32(item["id"]);
-					aevm.uzsakymai.Pavadinimas = Convert.ToString(item["pavadinimas"]);
-                    aevm.uzsakymai.NustatymoData = Convert.ToDateTime(item["israsymo_data"]);
-                    aevm.uzsakymai.Kaina = Convert.ToDouble(item["kaina"]);
-                    aevm.uzsakymai.FkDarbuotojas = Convert.ToString(item["fk_DARBUOTOJASasmens_kodas"]);
-                    aevm.uzsakymai.FkGyvunas = Convert.ToString(item["kodas"]);
-				}
-
-				return aevm;
-			}
-
-			return null;
-		}*/
-
-		public static Uzsakymai FindForDeletion(int id)
+		public static Uzsakymai Find(int id)
 		{
 			var a = new Uzsakymai();
 
@@ -296,30 +265,30 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 				args.Add("?darb", MySqlDbType.VarChar).Value = uzsakymaiM.FkDarbuotojas;
 				args.Add("?gyv", MySqlDbType.VarChar).Value = uzsakymaiM.FkGyvunas;
 			});
-		}
+		}*/
 
-		public static void Update(uzsakymaiEditVM uzsakymaiEVM)
+		public static void Update(Uzsakymai uzsakymas)
 		{
 			var query =
-				$@"UPDATE `{Config.TblPrefix}medikacijos`
+				$@"UPDATE `{Config.TblPrefix}užsakymai`
 				SET
-					pavadinimas=?pavadinimas,
-                    israsymo_data=?data,
-                    kaina=?kaina,
-                    fk_DARBUOTOJASasmens_kodas=?darb,
-                    fk_GYVUNASkodas=?gyv
+					Užsakymo_laikas=?ulaikas,
+                    Užsakymo_kaina=?kaina,
+                    Apmokėjimo_laikas=?alaikas,
+                    Nuolaida=?nuolaida,
+                    Būsena=?busena
 				WHERE
 					id=?id";
 
 			Sql.Update(query, args => {
-				args.Add("?pavadinimas", MySqlDbType.VarChar).Value = uzsakymaiEVM.uzsakymai.Pavadinimas;
-				args.Add("?data", MySqlDbType.Date).Value = uzsakymaiEVM.uzsakymai.NustatymoData;
-                args.Add("?kaina", MySqlDbType.Float).Value = uzsakymaiEVM.uzsakymai.Kaina;
-				args.Add("?darb", MySqlDbType.VarChar).Value = uzsakymaiEVM.uzsakymai.FkDarbuotojas;
-				args.Add("?gyv", MySqlDbType.VarChar).Value = uzsakymaiEVM.uzsakymai.FkGyvunas;
-				args.Add("?id", MySqlDbType.Int32).Value = uzsakymaiEVM.uzsakymai.ID;
+				args.Add("?ulaikas", MySqlDbType.DateTime).Value = uzsakymas.UzsakymoLaikas;
+				args.Add("?kaina", MySqlDbType.Double).Value = uzsakymas.UzsakymoKaina;
+                args.Add("?alaikas", MySqlDbType.DateTime).Value = uzsakymas.ApmokejimoLaikas;
+				args.Add("?nuolaida", MySqlDbType.Double).Value = uzsakymas.Nuolaida;
+				args.Add("?busena", MySqlDbType.Int32).Value = uzsakymas.Busena;
+				args.Add("?id", MySqlDbType.Int32).Value = uzsakymas.pk_Id;
 			});
-		}*/
+		}
 
 		public static void Delete(int id)
 		{
@@ -328,16 +297,5 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 				args.Add("?id", MySqlDbType.Int32).Value = id;
 			});
 		}
-
-		/*public static void DeleteForGyvunas(string id)
-		{
-			var query =
-				$@"DELETE FROM `{Config.TblPrefix}medikacijos`
-				WHERE medikacijos.fk_GYVUNASkodas=?id";
-
-			Sql.Delete(query, args => {
-				args.Add("?id", MySqlDbType.VarChar).Value = id;
-			});
-		}*/
 	}
 }

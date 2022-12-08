@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 using Org.Ktu.Isk.P175B602.Autonuoma.Repositories;
-using Org.Ktu.Isk.P175B602.Autonuoma.Models;
+using Org.Ktu.Isk.P175B602.Autonuoma.Model;
 using Org.Ktu.Isk.P175B602.Autonuoma.ViewModels;
 
 
@@ -49,21 +49,36 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 		/// </summary>
 		/// <param name="id">ID of the entity to edit.</param>
 		/// <returns>Editing form view.</returns>
-		public ActionResult Edit(string id)
+		/*public ActionResult Edit(int id)
 		{
-			return View();
-		}
+			
+		}*/
 
-		/// <summary>
-		/// This is invoked when buttons are pressed in the editing form.
-		/// </summary>
-		/// <param name="id">ID of the entity being edited</param>
-		/// <param name="autoEvm">Entity model filled with latest data.</param>
-		/// <returns>Returns editing from view or redirects back to Index if save is successfull.</returns>
-		[HttpPost]
-		public ActionResult Edit(string id, KlientasEditVM klientasEVM)
+		public ActionResult Edit(int id, int? save, Uzsakymai Uzsakymas)
 		{
-			return View();
+			if(save != null)
+			{
+				//form field validation passed?
+				if( ModelState.IsValid )
+				{
+					UzsakymaiRepo.Update(Uzsakymas);
+
+					//save success, go back to the entity list
+					return RedirectToAction("Index");
+				}
+				else
+				{
+					PopulateLists(Uzsakymas);
+					return View(Uzsakymas);
+				}
+			}
+			else
+			{
+				var uzsakymas = UzsakymaiRepo.Find(id);
+				PopulateLists(uzsakymas);
+
+				return View(uzsakymas);
+			}
 		}
 
 		/// </summary>
@@ -71,7 +86,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 		/// <returns>Deletion form view.</returns>
 		public ActionResult Delete(int id)
 		{
-			var UzsakymaiEVM = UzsakymaiRepo.FindForDeletion(id);
+			var UzsakymaiEVM = UzsakymaiRepo.Find(id);
 			return View(UzsakymaiEVM);
 		}
 
@@ -97,10 +112,24 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 				//enable explanatory message and show delete form
 				ViewData["deletionNotPermitted"] = true;
 
-				var UzsakymaiEVM = UzsakymaiRepo.FindForDeletion(id);
+				var UzsakymaiEVM = UzsakymaiRepo.Find(id);
 
 				return View("Delete", UzsakymaiEVM);
 			}
+		}
+
+		public void PopulateLists(Uzsakymai uzsakymai)
+		{
+			var busenos = UzsakymuBusenosRepo.List();
+
+			uzsakymai.Lists.Busenos =
+				busenos.Select(it => {
+					return
+						new SelectListItem() {
+							Value = it.Id.ToString(),
+							Text = it.Pavadinimas
+						};
+				}).ToList();
 		}
 	}
 }
