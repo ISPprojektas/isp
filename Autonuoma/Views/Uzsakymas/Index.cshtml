@@ -19,7 +19,7 @@
 	<table class="entitylist table table-striped table-responsive table-hover">
 		<thead>
 			<tr>
-				<th>
+				<th style="width: 100px;">
 					@Html.DisplayNameFor(model => model.pk_Id)
 				</th>
 				<th>
@@ -37,18 +37,18 @@
 				<th>
 					@Html.DisplayNameFor(model => model.Busena)
 				</th>
-                                <th>
+				<th>
 					@Html.DisplayNameFor(model => model.fk_Naudotojas)
 				</th>
-                                <th>
+				<th>
 					@Html.DisplayNameFor(model => model.fk_Parduotuve)
 				</th>
-                                <th>
+				<th>
 					Redaguoti
 				</th>
-                                <th>
-                                        Šalinti 
-                                </th>
+				<th>
+						Šalinti 
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -72,7 +72,7 @@
 				<td>
 					@Html.DisplayFor(model => item.BusenaToString)
 				</td>
-                                <td>
+                <td>
 					@Html.DisplayFor(model => item.fk_NaudotojasToString)
 				</td>
                                 <td>
@@ -81,49 +81,61 @@
 				<td>
 					<a href="@Url.Action("Edit", new { id=item.pk_Id })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
 				</td>
-                                <td>
-                                        <a href="@Url.Action("Delete", new { id=item.pk_Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
-                                </td>
-			</tr>
-                        <tr>
-                                <td>Užsakymo prekės:</td>
-                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                        </tr>
-                        <tr>
-                                <td>Pavadinimas</td>
-                                <td>Kiekis</td>
-                                <td>Vieneto kaina</td>
-                                <td>Kaina</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                        </tr>
-                        @foreach (var el in item.uzsakymoPrekes)
-                        {
-                                <tr>
-                                        <td>
-                                                @Html.DisplayFor(model => el.fk_PrekeToString)
-                                        </td>
-                                        <td>
-                                                @Html.DisplayFor(model => el.PrekesKiekis)
-                                        </td>
-                                        <td>
-                                                @Html.DisplayFor(model => el.VienetoKaina)
-                                        </td>
-                                        <td>
-                                                @Html.DisplayFor(model => el.Kaina)
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                </tr>
-                        }
+				<td>
+						<a href="@Url.Action("Delete", new { id=item.pk_Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+				</td>
+				</tr>
+				<tr>
+						<td>Prekės:</td>
+						<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+						<td>Pavadinimas</td>
+						<td>Kiekis</td>
+						<td>Vieneto kaina</td>
+						<td>Kaina</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+				</tr>
+				@foreach (var el in item.uzsakymoPrekes)
+				{
+					<tr>
+						<td>
+							@Html.DisplayFor(model => el.fk_PrekeToString)
+						</td>
+						<td>
+							@Html.DisplayFor(model => el.PrekesKiekis)
+						</td>
+						<td>
+							@Html.DisplayFor(model => el.VienetoKaina)
+						</td>
+						<td>
+							@Html.DisplayFor(model => el.Kaina)
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				}
+				<tr class="table-success">
+					<td>Galinė kaina: @item.GalineKaina()</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
 			}
 		</tbody>
 	</table>

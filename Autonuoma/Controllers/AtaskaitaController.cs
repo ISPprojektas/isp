@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 using Org.Ktu.Isk.P175B602.Autonuoma.Repositories;
-using Org.Ktu.Isk.P175B602.Autonuoma.Models;
+using Org.Ktu.Isk.P175B602.Autonuoma.Model;
 using Org.Ktu.Isk.P175B602.Autonuoma.ViewModels;
 
 
@@ -20,12 +20,50 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 		/// <returns>Entity list view.</returns>
 		public ActionResult Generate()
 		{
-			return View();
+			var a = new Ataskaita();
+			a.uzsakymai = UzsakymaiRepo.List();
+			return View(a);
 		}
 
-		public ActionResult Report()
+		#nullable enable
+		[HttpPost]
+		public ActionResult Report(Ataskaita ataskaita)
 		{
-			return View();
+			ataskaita.uzsakymai = UzsakymaiRepo.List();
+			if(ataskaita.filters.DateFrom != null)
+			{
+				ataskaita.uzsakymai = ataskaita.uzsakymai.Where(u => u.UzsakymoLaikas >= ataskaita.filters.DateFrom).ToList();
+			}
+			if(ataskaita.filters.DateTo != null)
+			{
+				ataskaita.uzsakymai = ataskaita.uzsakymai.Where(u => u.UzsakymoLaikas <= ataskaita.filters.DateTo).ToList();
+			}
+			if(ataskaita.filters.KainaFrom != null)
+			{
+				ataskaita.uzsakymai = ataskaita.uzsakymai.Where(u => u.GalineKaina() >= ataskaita.filters.KainaFrom).ToList();
+			}
+			if(ataskaita.filters.KainaTo != null)
+			{
+				ataskaita.uzsakymai = ataskaita.uzsakymai.Where(u => u.GalineKaina() <= ataskaita.filters.KainaTo).ToList();
+			}
+			return View(ataskaita);
+		}
+		#nullable disable
+
+		public void PopulateLists(Ataskaita a)
+		{
+			//load entities for the select lists
+            var rusys = GyvunuRusisRepo.List();
+
+           	a.Lists.Rusys =
+				rusys.Select(it => {
+					return
+						new SelectListItem() {
+							Value = it.ID.ToString(),
+							Text = it.Pavadinimas
+						};
+				})
+				.ToList();
 		}
 	}
 }

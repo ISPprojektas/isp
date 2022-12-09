@@ -53,5 +53,15 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
 			public IList<SelectListItem> Busenos { get; set; }
 		}
         public ListsM Lists { get; set; } = new ListsM();
+
+        public double GalineKaina()
+        {
+            double result = UzsakymoKaina;
+            foreach(var i in uzsakymoPrekes)
+            {
+                result += i.Kaina;
+            }
+            return result * (100 - Nuolaida) / 100;
+        }
     }
 }

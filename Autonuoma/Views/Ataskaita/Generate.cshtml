@@ -1,17 +1,283 @@
+@model Org.Ktu.Isk.P175B602.Autonuoma.Model.Ataskaita
+@{
+    ViewData["title"] = "Ataskaitos kūrimas";
+}
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
 </head>
 <body>
-    <div>
-        <p>Užsakymų ataskaitos generavimas</p>
-        <a href="/">Pagrindinis puslapis</a>
-        <br></br>
-        <a asp-action="Report" asp-controller="Ataskaita">Užsakymų ataskaita</a>
-    </div>
+	<p>Užsakymų ataskaitos generavimas</p>
+	<a href="/">Pagrindinis puslapis</a>
+	<br></br>
+	<a asp-action="Report" asp-controller="Ataskaita">Užsakymų ataskaita</a>
+
+	<div class="container-fluid d-flex justify-content-center">
+	@using (Html.BeginForm("Report", "Ataskaita", FormMethod.Post, new { model = Model }))
+	{
+		<div class="form-group container-fluid d-flex justify-content-between align-items-center p-0">
+			<div class="form-group container-fluid d-flex justify-content-left align-items-center m-0 p-0">
+				<label>Užsakymai nuo: </label>
+				<span style="width:3ch;"></span>
+				@Html.TextBoxFor(m => m.filters.DateFrom, "{0:yyyy-MM-dd}", new { @class = "date-picker" })
+
+				<span style="width:3ch;"></span>
+
+				<label>Užsakymai iki: </label>
+				<span style="width:3ch;"></span>
+				@Html.TextBoxFor(m => m.filters.DateTo, "{0:yyyy-MM-dd}", new { @class = "date-picker" })
+
+				<span style="width:3ch;"></span>
+			</div>
+		</div>
+
+		<div class="form-group container-fluid d-flex justify-content-between align-items-center p-0">
+			<div class="form-group container-fluid d-flex justify-content-left align-items-center m-0 p-0">
+				<label>Užsakymų galinė kaina nuo: </label>
+				<span style="width:3ch;"></span>
+				@Html.EditorFor(m => m.filters.KainaFrom, new { htmlAttributes = new { @class = "form-control" } })
+
+				<span style="width:10ch;"></span>
+
+				<label>Užsakymų galinė kaina iki: </label>
+				<span style="width:3ch;"></span>
+				@Html.EditorFor(m => m.filters.KainaTo, new { htmlAttributes = new { @class = "form-control" } })
+
+				<span style="width:3ch;"></span>
+			</div>
+		</div>
+
+		<div class="form-group container-fluid d-flex justify-content-between align-items-center p-0">
+			<button
+				class="btn btn-success"
+				style="white-space: nowrap;"
+				type="submit"
+				name="save"
+				value="Report"
+				formaction="@Url.Action("Report")"
+			><i class="fa-solid fa-filter"></i> Atrinkti</button>
+		</div>
+
+		<div class="d-flex justify-content-center">
+			<table class="entitylist table table-striped table-responsive table-hover">
+				<thead>
+					<tr>
+						<th style="width: 100px;">
+							@Html.DisplayNameFor(model => model.uzsakymai[0].pk_Id)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.uzsakymai[0].UzsakymoLaikas)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.uzsakymai[0].UzsakymoKaina)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.uzsakymai[0].ApmokejimoLaikas)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.uzsakymai[0].Nuolaida)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.uzsakymai[0].Busena)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.uzsakymai[0].fk_Naudotojas)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.uzsakymai[0].fk_Parduotuve)
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.uzsakymai) {
+					<tr>
+						<td>
+							@Html.DisplayFor(model => item.pk_Id)
+						</td>
+						<td>
+							@Html.DisplayFor(model => item.UzsakymoLaikas)
+						</td>
+						<td>
+							@Html.DisplayFor(model => item.UzsakymoKaina)
+						</td>
+						<td>
+							@Html.DisplayFor(model => item.ApmokejimoLaikas)
+						</td>
+						<td>
+							@Html.DisplayFor(model => item.Nuolaida)
+						</td>
+						<td>
+							@Html.DisplayFor(model => item.BusenaToString)
+						</td>
+						<td>
+							@Html.DisplayFor(model => item.fk_NaudotojasToString)
+						</td>
+										<td>
+							@Html.DisplayFor(model => item.fk_ParduotuveToString)
+						</td>
+						</tr>
+						<tr>
+								<td>Prekės:</td>
+								<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+						</tr>
+						<tr>
+								<td>Pavadinimas</td>
+								<td>Kiekis</td>
+								<td>Vieneto kaina</td>
+								<td>Kaina</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+						</tr>
+						@foreach (var el in item.uzsakymoPrekes)
+						{
+							<tr>
+								<td>
+									@Html.DisplayFor(model => el.fk_PrekeToString)
+								</td>
+								<td>
+									@Html.DisplayFor(model => el.PrekesKiekis)
+								</td>
+								<td>
+									@Html.DisplayFor(model => el.VienetoKaina)
+								</td>
+								<td>
+									@Html.DisplayFor(model => el.Kaina)
+								</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						}
+						<tr class="table-success">
+							<td>Galinė kaina: @item.GalineKaina()</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					}
+				</tbody>
+			</table>
+        </div>
+		@*
+		<div class="form-group container-fluid d-flex justify-content-between align-items-center p-0">
+			<div class="form-group container-fluid d-flex justify-content-left align-items-center m-0 p-0">
+				<label>Gyvūnų&nbsp;rūšis:</label>
+				<span style="width:6ch;"></span>
+				@Html.DropDownListFor(m => m.report.Rusis, Model.Lists.Rusys, "--------------", new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.report.Rusis, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group container-fluid d-flex justify-content-between align-items-center p-0">
+			<button
+				class="btn btn-success"
+				style="white-space: nowrap;"
+				name="save"
+				value="Model.report"
+			><i class="fa-solid fa-filter"></i> Atrinkti</button>
+		</div>
+
+		<table class="table table-striped table-hover w-100">
+			<thead>
+				<tr style="background-color:#009B77">
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].GyvunoID)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].GyvunoVardas)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].GimimoData)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].Dienos)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].Svoris)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].FkLytisToString)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].FkRusisToString)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].FkDydisToString)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].Kaina)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].FkSutartis)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].FkKlientas)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].FkKlientasToString)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].SumaVakcinaciju)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].KiekisVakcinaciju)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].SumaVaistu)</th>
+					<th>@Html.DisplayNameFor(m => m.report.Parduotuves.First().Value[0].KiekisVaistu)</th>
+				</tr>
+			</thead>
+			<tbody>
+				@if( Model.report.Parduotuves.Count == 0 )
+				{
+				<tr>
+					<td colspan="16" align="center"><b style="color:red;">Nerasta parametrus atitinkančių gyvūnų</b></td>
+				</tr>
+				}
+
+				@foreach (var item in Model.report.Parduotuves)
+				{
+					<tr style="background-color: #55B4B0">
+						<td colspan="16" align="center"><b>@Html.DisplayFor(m => item.Key)</b></td>
+					</tr>
+					foreach(var parduotuve in item.Value)
+					{
+						<tr>
+							<td>@Html.DisplayFor(m => parduotuve.GyvunoID)</td>
+							<td>@Html.DisplayFor(m => parduotuve.GyvunoVardas)</td>
+							<td>@Html.DisplayFor(m => parduotuve.GimimoData)</td>
+							<td>@Html.DisplayFor(m => parduotuve.Dienos)</td>
+							<td>@Html.DisplayFor(m => parduotuve.Svoris)</td>
+							<td>@Html.DisplayFor(m => parduotuve.FkLytisToString)</td>
+							<td>@Html.DisplayFor(m => parduotuve.FkRusisToString)</td>
+							<td>@Html.DisplayFor(m => parduotuve.FkDydisToString)</td>
+							<td>@Html.DisplayFor(m => parduotuve.Kaina)</td>
+							<td>@Html.DisplayFor(m => parduotuve.FkSutartis)</td>
+							<td>@Html.DisplayFor(m => parduotuve.FkKlientas)</td>
+							<td>@Html.DisplayFor(m => parduotuve.FkKlientasToString)</td>
+							<td>@Html.DisplayFor(m => parduotuve.SumaVakcinaciju)</td>
+							<td>@Html.DisplayFor(m => parduotuve.KiekisVakcinaciju)</td>
+							<td>@Html.DisplayFor(m => parduotuve.SumaVaistu)</td>
+							<td>@Html.DisplayFor(m => parduotuve.KiekisVaistu)</td>
+						</tr>
+					}
+					<tr>
+						<td colspan="12"></td>
+						<td><b>@Html.DisplayFor(m => item.Value.First().BendraSumaVakcinaciju)</b></td>
+						<td><b>@Html.DisplayFor(m => item.Value.First().BendraKiekisVakcinaciju)</b></td>
+						<td><b>@Html.DisplayFor(m => item.Value.First().BendraSumaVaistu)</b></td>
+						<td><b>@Html.DisplayFor(m => item.Value.First().BendraKiekisVaistu)</b></td>
+					</tr>
+				}
+
+				<tr style="background-color: #009B77">
+					<td height="10px;" colspan="16" align="center"><b>Bendra suma</b></td>
+				</tr>
+
+				<tr>
+					<td colspan="12"></td>
+					<td>
+						@Html.DisplayFor(m => Model.report.VisoSumaVakcinaciju)
+					</td>
+					<td>
+						@Html.DisplayFor(m => Model.report.VisoKiekisVakcinaciju)
+					</td>
+					<td>
+						@Html.DisplayFor(m => Model.report.VisoSumaVaistu)
+					</td>
+					<td>
+						@Html.DisplayFor(m => Model.report.VisoKiekisVaistu)
+					</td>
+				</tr>
+			</tbody>
+		</table>*@
+	}
+	</div>
+	
 </body>
 </html>
