@@ -1,6 +1,6 @@
-@model IEnumerable<Org.Ktu.Isk.P175B602.Autonuoma.Model.Prekes>
+@model IEnumerable<Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.PrekesListVM>
 @{
-	ViewData["title"] = "Sutarties būsenos";
+	ViewData["title"] = "Prekės";
 }
 
 <!DOCTYPE html>
@@ -12,8 +12,14 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+        <span class="title">@ViewData["title"]</span>
+        <span class="actions">
+            <a href="@Url.Action("Create")" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Sukurti naują</a>
+    	</span>
+</div>
     <div>
-        <p>Prekių sąrašas</p>
+        <p>Prekių sąrašass</p>
         <a href="/">Pagrindinis</a>
         <br></br>
         <a asp-action="Index" asp-controller="AdministratoriausPuslapis">Administratoriaus puslapis</a>
@@ -21,6 +27,82 @@
         <a asp-action="Index" asp-controller="Klientas">Kliento profilis</a>
         <br/>
         <a asp-action="Index" asp-controller="Preke">Prekės peržiūra</a>
+    </div>
+    <div class="d-flex justify-content-center">
+        <table class="entitylist table table-striped table-hover">
+            <thead>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Pavadinimas)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Kaina)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Aprasymas)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Patinka_paspaudimai)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Nuotrauka)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Savybes)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Kategorija)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Gamybos_vieta)
+                    </td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Pavadinimas)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Kaina) €
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Aprasymas)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Patinka_paspaudimai)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Nuotrauka)
+                    </td>
+                    <td>
+                        @foreach (var savybe in item.Savybes)
+                        {                            
+                            @Html.DisplayFor(model => savybe)<br/>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Kategorija)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Gamybos_vieta)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
+                        <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

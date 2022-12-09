@@ -1,10 +1,16 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+
+namespace Org.Ktu.Isk.P175B602.Autonuoma.ViewModels
 {
-    public class Prekes
-    {
-        [DisplayName("ID")]
+	/// <summary>
+	/// Model of 'Klientas' entity.
+	/// </summary>
+	public class PrekesListVM
+	{
+		[DisplayName("ID")]
 		[Required]
 		public int ID { get; set; }
 		
@@ -40,7 +46,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
         [DisplayName("Garantijos trukmė")]
 		public string? Garantijos_trukmė { get; set; }
         [DisplayName("Rūbų dydis")]
-		public int? dydis { get; set; }
+		public string? dydis { get; set; }
 
 		#nullable disable
         [DisplayName("Kategorija")]
@@ -49,6 +55,25 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
 
         [DisplayName("Gamybos vieta")]
 		[Required]
-		public int Gamybos_vieta { get; set; }
-    }
+		public string Gamybos_vieta { get; set; }
+		[DisplayName("Savybės")]
+		public List<string> Savybes {
+			get {
+				List<string> arr = new List<string>();
+				if (!String.IsNullOrEmpty(Spalva) && Spalva[Spalva.Length-1] != ' ')
+					arr.Add(Spalva);
+				if (!String.IsNullOrEmpty(Medžiaga) && Medžiaga[Medžiaga.Length-1] != ' ')
+					arr.Add(Medžiaga);
+				if (!String.IsNullOrEmpty(Matmenys) && Matmenys[Matmenys.Length-1] != ' ')
+					arr.Add(Matmenys);
+				if (!String.IsNullOrEmpty(Svoris) && Svoris[Svoris.Length-1] != ' ')
+					arr.Add(Svoris);
+				if (!String.IsNullOrEmpty(Garantijos_trukmė) && Garantijos_trukmė[Garantijos_trukmė.Length-1] != ' ')
+					arr.Add(Garantijos_trukmė);
+				if (!String.IsNullOrEmpty(dydis) && dydis[dydis.Length-1] != ' ')
+					arr.Add(dydis);
+				return arr;
+			}
+		}
+	}
 }

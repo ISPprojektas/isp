@@ -3,6 +3,6 @@
     public class RubuDydziai
     {
         public int pk_Id { get; set; }
-        public int Pavadinimas { get; set; }
+        public string Pavadinimas { get; set; }
     }
 }

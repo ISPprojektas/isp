@@ -1,0 +1,118 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.PrekesEditVM
+
+@{
+	ViewData["title"] = "Prekės redagavimas";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+	<fieldset class="border rounded shadow p-2">
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.ID, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+			@Html.ValidationMessageFor(m => m.Prekes.ID, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Pavadinimas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Pavadinimas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Prekes.Pavadinimas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Kaina, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Kaina, new { @class = "form-control"})
+			@Html.ValidationMessageFor(m => m.Prekes.Kaina, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Aprasymas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Aprasymas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Prekes.Aprasymas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Patinka_paspaudimai, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Patinka_paspaudimai, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Prekes.Patinka_paspaudimai, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Nuotrauka, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Nuotrauka, new { htmlAttributes = new { @class = "form-control", @formnovalidate = "formnovalidate" } })
+			@Html.ValidationMessageFor(m => m.Prekes.Nuotrauka, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Spalva, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Spalva, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Prekes.Spalva, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Medžiaga, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Medžiaga, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Prekes.Medžiaga, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Matmenys, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Matmenys, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Prekes.Matmenys, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Svoris, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Svoris, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Prekes.Svoris, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Garantijos_trukmė, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Prekes.Garantijos_trukmė, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Prekes.Garantijos_trukmė, "", new { @class = "text-danger" })
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.dydis, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Prekes.dydis, Model.Lists.RubuDydziai, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Prekes.dydis, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Kategorija, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Prekes.Kategorija, Model.Lists.Kategorijos, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Prekes.Kategorija, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Prekes.Gamybos_vieta, new { @class = "control-label" })
+			@Html.DropDownListFor(m => m.Prekes.Gamybos_vieta, Model.Lists.GamybosVietos, "--------------", new { @class = "form-control" })
+			@Html.ValidationMessageFor(m => m.Prekes.Gamybos_vieta, "", new { @class = "text-danger" })
+		</div>
+	</fieldset>	
+
+	<div class="container-fluid d-flex d-row justify-content-end">
+		<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+	</div>
+}
+</div>
+
+<div class="main-content-footer container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title"></span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
