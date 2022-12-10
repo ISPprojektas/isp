@@ -29,6 +29,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
 			public double? KainaFrom { get; set; }
 			[DataType(DataType.Currency)]
 			public double? KainaTo { get; set; }
+			public string Apmoketas { get; set; }
 		}
 		public Ataskaita()
 		{

@@ -12,10 +12,22 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+	<style type = "text/css">
+    * { font-family: sans-serif; }
+	</style>
 </head>
 <body>
 	<a href="/">Pagrindinis puslapis</a>
 	<br></br>
+	@using (Html.BeginForm("PDF", "Ataskaita", FormMethod.Post, new { model = Model }))
+	{
+		@Html.HiddenFor(model => model.filters.Apmoketas)
+		@Html.HiddenFor(model => model.filters.DateFrom)
+		@Html.HiddenFor(model => model.filters.DateTo)
+		@Html.HiddenFor(model => model.filters.KainaFrom)
+		@Html.HiddenFor(model => model.filters.KainaTo)
+		<input type="submit" value="PDF" />
+	}
 		<div class="d-flex justify-content-center">
 			<table class="entitylist table table-striped table-responsive table-hover">
 				<thead>
@@ -110,14 +122,7 @@
 							</tr>
 						}
 						<tr class="table-success">
-							<td>Galinė kaina: @item.GalineKaina()</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td colspan="8">Galinė kaina: @item.GalineKaina()</td>
 						</tr>
 					}
 				</tbody>

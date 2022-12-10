@@ -66,6 +66,9 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma
 				//build the app
                 var app = builder.Build();
 
+				IWebHostEnvironment env = app.Environment;
+				Rotativa.AspNetCore.RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env);
+				
                 //initialize configuration helper
                 Config.CreateSingletonInstance(app.Configuration);
 
