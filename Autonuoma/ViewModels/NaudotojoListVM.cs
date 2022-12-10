@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using System.Security.Cryptography;
 using System.Text;
+using System.Security.Cryptography;
 
-namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
+namespace Org.Ktu.Isk.P175B602.Autonuoma.ViewModels
 {
-    public class Naudotojai
+    public class NaudotojoListVM
     {
         private string _slaptazodis;
 
@@ -23,7 +23,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
 
         [DisplayName("Slaptažodis")]
         [Required]
-        public string Slaptazodis 
+        public string Slaptazodis
         {
             get { return _slaptazodis; }
             set { _slaptazodis = EncryptPassword(value); }

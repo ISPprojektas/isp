@@ -1,0 +1,133 @@
+﻿@model IEnumerable<Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.NaudotojoListVM>
+@{
+    ViewData["title"] = "Naudotojai";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+        <span class="title">@ViewData["title"]</span>
+        <span class="actions">
+            <a href="@Url.Action("Create")" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Sukurti naują</a>
+        </span>
+    </div>
+    <div>
+        <p>Naudotojų sąrašass</p>
+        <a href="/">Pagrindinis</a>
+        <br></br>
+        <a asp-action="Index" asp-controller="AdministratoriausPuslapis">Administratoriaus puslapis</a>
+        <br></br>
+        <a asp-action="Index" asp-controller="Klientas">Kliento profilis</a>
+        <br />
+        <a asp-action="Index" asp-controller="Preke">Prekės peržiūra</a>
+    </div>
+    <div class="d-flex justify-content-center">
+        <table class="entitylist table table-striped table-hover">
+            <thead>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.pk_Id)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Vardas)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Pavarde)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.ElPastas)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Slaptazodis)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.GimimoData)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Slapyvardis)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.KortelesNr)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.NuotraukosLink)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.TelNr)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Miestas)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.RegistracijosData)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Tipas)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Privilegijos)
+                    </td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Vardas)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Pavarde)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.ElPastas)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Slaptazodis)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.GimimoData)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Slapyvardis)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.KortelesNr)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.NuotraukosLink)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.TelNr)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Miestas)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.RegistracijosData)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Tipas)
+                        </td>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Privilegijos)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.pk_Id })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
+                            <a href="@Url.Action("Delete", new { id = item.pk_Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
