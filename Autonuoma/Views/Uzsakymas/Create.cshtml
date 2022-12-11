@@ -78,9 +78,12 @@
 	</fieldset>
 
 	if(Accessor.HttpContext.Session.GetString("cart1") != null){
-		<div class="container-fluid d-flex d-row justify-content-end">
-			<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
-		</div>
+		if(Accessor.HttpContext.Session.GetString("cart2").Split('\n').Where(x => x == "0").Count() != Accessor.HttpContext.Session.GetString("cart2").Split('\n').Count())
+		{
+			<div class="container-fluid d-flex d-row justify-content-end">
+				<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+			</div>
+		}	
 	}
 	else
 	{

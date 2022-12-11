@@ -205,9 +205,12 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 			HttpContext.Session.SetInt32("uzsakymopreke" + id.ToString(), quantity);
 			if(HttpContext.Session.GetString("cart1") == null)
 			{
-				HttpContext.Session.SetString("cart1", id.ToString() + '\n');
-				HttpContext.Session.SetString("cart2", quantity.ToString() + '\n');
-				HttpContext.Session.SetString("cart3", pav + '\n');
+				if(quantity != 0)
+				{
+					HttpContext.Session.SetString("cart1", id.ToString() + '\n');
+					HttpContext.Session.SetString("cart2", quantity.ToString() + '\n');
+					HttpContext.Session.SetString("cart3", pav + '\n');
+				}
 			}
 			else
 			{
@@ -225,7 +228,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 					var newstring1 = "";
 					var newstring2 = "";
 					var newstring3 = "";
-					for(int i = 0; i < arr1.Length; i++)
+					for(int i = 0; i < arr1.Length - 1; i++)
 					{
 						if(arr2[i] != "0")
 						{
@@ -238,15 +241,25 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 					curr2 = newstring2;
 					curr3 = newstring3;
 				}
-				else
+				else if(quantity != 0)
 				{
 					curr1 += id.ToString() + '\n';
 					curr2 += quantity.ToString() + '\n';
 					curr3 += pav + '\n';
 				}
-				HttpContext.Session.SetString("cart1", curr1);
-				HttpContext.Session.SetString("cart2", curr2);
-				HttpContext.Session.SetString("cart3", curr3);
+				if(curr1 != "")
+				{
+					HttpContext.Session.SetString("cart1", curr1);						
+					HttpContext.Session.SetString("cart2", curr2);
+					HttpContext.Session.SetString("cart3", curr3);
+				}
+				else
+				{
+					HttpContext.Session.Remove("cart1");
+					HttpContext.Session.Remove("cart2");
+					HttpContext.Session.Remove("cart3");
+				}
+
 			}
 			return RedirectToAction("Index");
 		}
