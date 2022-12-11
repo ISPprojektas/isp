@@ -1,19 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        <p>Užsakymo kūrimas</p>
-        <br/>
-        <a href="/">Pagrindinis puslapis</a>
-        <br/>
-        <br></br>
-        <a asp-action="Buy" asp-controller="Preke">Prekės pirkimas</a>
-    </div>
-</body>
-</html>
+@model Org.Ktu.Isk.P175B602.Autonuoma.Model.Uzsakymai
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+@{
+	ViewData["title"] = "Užsakymo kūrimas";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+	<fieldset class="border rounded shadow p-2">
+		<div class="form-group">
+			@Html.HiddenFor(m => m.pk_Id, new { @class = "control-label" })
+		</div>
+
+		<div class="form-group">
+			@Html.HiddenFor(m => m.UzsakymoLaikas, new { @class = "control-label" })
+		</div>
+
+		<div class="form-group">
+			@Html.HiddenFor(m => m.UzsakymoKaina, new { @class = "control-label" })
+		</div>
+
+		<div class="form-group">
+			@Html.HiddenFor(m => m.ApmokejimoLaikas, new { @class = "control-label" })
+		</div>
+
+		<div class="form-group">
+			@Html.HiddenFor(m => m.Nuolaida, new { @class = "control-label" })
+		</div>
+
+		<div class="form-group">
+			@Html.HiddenFor(m => m.Busena, new { @class = "control-label" })
+		</div>
+
+        <div class="form-group">
+			@Html.HiddenFor(m => m.fk_NaudotojasToString, new { @class = "control-label" })
+		</div>
+
+        <div class="form-group">
+			@Html.HiddenFor(m => m.fk_ParduotuveToString, new { @class = "control-label" })
+		</div>   
+
+		<table>
+			<tr>
+				<th>Prekė</th>
+				<th>Kiekis</th>
+			</tr>
+		@{
+				var arr1 = Accessor.HttpContext.Session.GetString("cart1").Split('\n');
+				var arr2 = Accessor.HttpContext.Session.GetString("cart2").Split('\n');
+				var arr3 = Accessor.HttpContext.Session.GetString("cart3").Split('\n');
+				for(int i = 0; i < @arr1.Length; i++)
+				{
+					<tr>
+						<td>@arr3[i]</td>
+						<td>@arr2[i]</td>
+					</tr>
+				}
+		}
+		</table>
+	</fieldset>
+
+	<div class="container-fluid d-flex d-row justify-content-end">
+		<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+	</div>
+}
+</div>
+
+<div class="main-content-footer container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title"></span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>

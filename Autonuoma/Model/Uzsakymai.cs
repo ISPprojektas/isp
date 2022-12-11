@@ -7,7 +7,6 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
     public class Uzsakymai
     {
         [DisplayName("Užsakymo laikas")]
-		[Required]
         public DateTime UzsakymoLaikas { get; set; }
 
         [DisplayName("Užsakymo kaina")]
@@ -15,7 +14,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
         public double UzsakymoKaina { get; set; }
 
         [DisplayName("Apmokėjimo laikas")]
-        public DateTime ApmokejimoLaikas { get; set; }
+        public DateTime? ApmokejimoLaikas { get; set; }
 
         [DisplayName("Nuolaida")]
         public double Nuolaida { get; set; }

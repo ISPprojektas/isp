@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Org.Ktu.Isk.P175B602.Autonuoma.Repositories;
 using Org.Ktu.Isk.P175B602.Autonuoma.Models;
 using Org.Ktu.Isk.P175B602.Autonuoma.ViewModels;
-
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 {
@@ -197,6 +197,58 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 						};
 				})
 				.ToList();			
+		}
+
+		[HttpPost]
+		public ActionResult Process(int quantity, int id, string pav)
+		{
+			HttpContext.Session.SetInt32("uzsakymopreke" + id.ToString(), quantity);
+			if(HttpContext.Session.GetString("cart1") == null)
+			{
+				HttpContext.Session.SetString("cart1", id.ToString() + '\n');
+				HttpContext.Session.SetString("cart2", quantity.ToString() + '\n');
+				HttpContext.Session.SetString("cart3", pav + '\n');
+			}
+			else
+			{
+				var curr1 = HttpContext.Session.GetString("cart1");
+				var curr2 = HttpContext.Session.GetString("cart2");
+				var curr3 = HttpContext.Session.GetString("cart3");
+				if(curr1.Contains(id.ToString()+'\n'))
+				{
+					var arr1 = curr1.Split('\n');
+					var pos = Array.IndexOf(arr1, id.ToString());
+
+					var arr2 = curr2.Split('\n');
+					var arr3 = curr3.Split('\n');
+					arr2[pos] = quantity.ToString();
+					var newstring1 = "";
+					var newstring2 = "";
+					var newstring3 = "";
+					for(int i = 0; i < arr1.Length; i++)
+					{
+						if(arr2[i] != "0")
+						{
+							newstring1 += arr1[i] + '\n';
+							newstring2 += arr2[i] + '\n';
+							newstring3 += arr3[i] + '\n';
+						}
+					}
+					curr1 = newstring1;
+					curr2 = newstring2;
+					curr3 = newstring3;
+				}
+				else
+				{
+					curr1 += id.ToString() + '\n';
+					curr2 += quantity.ToString() + '\n';
+					curr3 += pav + '\n';
+				}
+				HttpContext.Session.SetString("cart1", curr1);
+				HttpContext.Session.SetString("cart2", curr2);
+				HttpContext.Session.SetString("cart3", curr3);
+			}
+			return RedirectToAction("Index");
 		}
 	}
 }

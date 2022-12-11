@@ -10,6 +10,7 @@ using Org.Ktu.Isk.P175B602.Autonuoma.Model;
 using Org.Ktu.Isk.P175B602.Autonuoma.ViewModels;
 
 
+
 namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 {
 	/// <summary>th
@@ -84,7 +85,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 					pk_Id = Convert.ToInt32(item["id"]),
 					UzsakymoLaikas = Convert.ToDateTime(item["Užsakymo_laikas"]),
                     UzsakymoKaina = Convert.ToDouble(item["Užsakymo_kaina"]),
-                    ApmokejimoLaikas = Convert.ToDateTime(item["Apmokėjimo_laikas"]),
+                    ApmokejimoLaikas = item["Apmokėjimo_laikas"] != DBNull.Value ? Convert.ToDateTime(item["Apmokėjimo_laikas"]) : new DateTime(),
                     Nuolaida = item["Nuolaida"] != DBNull.Value ? Convert.ToDouble(item["Nuolaida"]) : 0,
                     BusenaToString = Convert.ToString(item["name"]),
                     Busena = Convert.ToInt32(item["ubid"]),
@@ -198,7 +199,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 				a.pk_Id = Convert.ToInt32(item["id"]);
                 a.UzsakymoLaikas = Convert.ToDateTime(item["Užsakymo_laikas"]);
                 a.UzsakymoKaina = Convert.ToDouble(item["Užsakymo_kaina"]);
-                a.ApmokejimoLaikas = Convert.ToDateTime(item["Apmokėjimo_laikas"]);
+                a.ApmokejimoLaikas = item["Apmokėjimo_laikas"] != DBNull.Value ? Convert.ToDateTime(item["Apmokėjimo_laikas"]) : new DateTime();
                 a.Nuolaida = item["Nuolaida"] != DBNull.Value ? Convert.ToDouble(item["Nuolaida"]) : 0;
                 a.BusenaToString = Convert.ToString(item["name"]);
                 a.Busena = Convert.ToInt32(item["ubid"]);
@@ -288,6 +289,52 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 				args.Add("?busena", MySqlDbType.Int32).Value = uzsakymas.Busena;
 				args.Add("?id", MySqlDbType.Int32).Value = uzsakymas.pk_Id;
 			});
+		}
+
+		public static void Insert(Uzsakymai uzsakymas, string curr1, string curr2, string curr3)
+		{
+			var query =
+				$@"INSERT INTO `užsakymai` 
+				(`Užsakymo_laikas`, `Užsakymo_kaina`, `Apmokėjimo_laikas`, 
+				`Nuolaida`, `Būsena`, `fk_Naudotojas`, `fk_Parduotuvė`, `id`) 
+				VALUES (
+					NOW(), 
+					'0', 
+					NULL, 
+					'0', 
+					'1', 
+					?naud, 
+					?pard, 
+					NULL)";
+
+			var id = Sql.Insert(query, args => {
+				//args.Add("?naud", MySqlDbType.Int32).Value = uzsakymas.fk_Naudotojas;
+				args.Add("?naud", MySqlDbType.Int32).Value = 1;
+				//args.Add("?pard", MySqlDbType.Int32).Value = uzsakymas.fk_Parduotuve;
+				args.Add("?pard", MySqlDbType.Int32).Value = 1;
+			});
+
+			var arr1 = curr1.Split('\n').SkipLast(1).ToArray();
+			var arr2 = curr2.Split('\n').SkipLast(1).ToArray();
+			var arr3 = curr3.Split('\n').SkipLast(1).ToArray();
+
+			for(int i = 0; i < arr1.Length; i++)
+			{
+				var q =
+					$@"INSERT INTO `užsakymo_prekės` 
+					(`Prekės_kiekis`, `fk_Prekė`, `fk_Užsakymas`) 
+					VALUES (
+						?prekes_kiekis,
+						?preke,
+						?uzsakymas)";
+
+				Sql.Insert(q, args => {
+					args.Add("?prekes_kiekis", MySqlDbType.Int32).Value = arr2[i];
+					args.Add("?preke", MySqlDbType.Int32).Value = arr1[i];
+					args.Add("?uzsakymas", MySqlDbType.Int32).Value = id;
+				});
+			}
+			
 		}
 
 		public static void Delete(int id)

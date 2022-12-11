@@ -30,7 +30,9 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 		/// <returns>Creation form view.</returns>
 		public ActionResult Create()
 		{
-			return View();
+			Uzsakymai uzsakymas = new Uzsakymai();
+			PopulateLists(uzsakymas);
+			return View(uzsakymas);
 		}
 
 		/// <summary>
@@ -39,9 +41,24 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 		/// <param name="modelisEvm">Entity model filled with latest data.</param>
 		/// <returns>Returns creation from view or redirects back to Index if save is successfull.</returns>
 		[HttpPost]
-		public ActionResult Create(KlientasEditVM klientasEVM)
+		public ActionResult Create(Uzsakymai Uzsakymas, int? save)
 		{
-			return View();
+			if(save != null)
+			{
+					if( ModelState.IsValid )
+					{
+						var curr1 = HttpContext.Session.GetString("cart1");
+						var curr2 = HttpContext.Session.GetString("cart2");
+						var curr3 = HttpContext.Session.GetString("cart3");
+						UzsakymaiRepo.Insert(Uzsakymas, curr1, curr2, curr3);
+						//save success, go back to the entity list
+						return RedirectToAction("Index");
+					}
+			}
+			
+			var errors =ModelState.Select(x=>x.Value.Errors).Where(y=>y.Count>0).ToList();
+			PopulateLists(Uzsakymas);
+			return View(Uzsakymas);
 		}
 
 		/// <summary>
