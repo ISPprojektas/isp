@@ -59,6 +59,8 @@
 				<th>Kiekis</th>
 			</tr>
 		@{
+			if(Accessor.HttpContext.Session.GetString("cart1") != null)
+			{
 				var arr1 = Accessor.HttpContext.Session.GetString("cart1").Split('\n');
 				var arr2 = Accessor.HttpContext.Session.GetString("cart2").Split('\n');
 				var arr3 = Accessor.HttpContext.Session.GetString("cart3").Split('\n');
@@ -69,13 +71,21 @@
 						<td>@arr2[i]</td>
 					</tr>
 				}
+			}
+
 		}
 		</table>
 	</fieldset>
 
-	<div class="container-fluid d-flex d-row justify-content-end">
-		<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
-	</div>
+	if(Accessor.HttpContext.Session.GetString("cart1") != null){
+		<div class="container-fluid d-flex d-row justify-content-end">
+			<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+		</div>
+	}
+	else
+	{
+		<p>Nėra pridėtų prekių į užsakymą!</p>
+	}
 }
 </div>
 
