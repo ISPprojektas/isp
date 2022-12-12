@@ -30,12 +30,17 @@
     <div>
         <p>Prekių sąrašass</p>
         <a href="/">Pagrindinis</a>
-        <br></br>
-        <a asp-action="Index" asp-controller="AdministratoriausPuslapis">Administratoriaus puslapis</a>
-        <br></br>
-        <a asp-action="Index" asp-controller="Klientas">Kliento profilis</a>
-        <br/>
-        <a asp-action="Create" asp-controller="Uzsakymas">Užsakymo kūrimas</a>
+        @{
+            if(priv == 2 || priv == 3)
+            {
+                <br></br>
+                <a asp-action="Index" asp-controller="AdministratoriausPuslapis">Administratoriaus puslapis</a>
+                <br></br>
+                <a asp-action="Index" asp-controller="Klientas">Kliento profilis</a>
+                <br/>
+                <a asp-action="Create" asp-controller="Uzsakymas">Užsakymo kūrimas</a>   
+            }
+        }
     </div>
     <div class="d-flex justify-content-center">
         <table class="entitylist table table-striped table-hover">
@@ -116,12 +121,18 @@
                                 }
                            }
                         <br>
-                        @using(Html.BeginForm("Process", "Prekes", new { id = item.ID, pav = item.Pavadinimas }, FormMethod.Post))
-                        {
-                            var val = @Accessor.HttpContext.Session.GetInt32("uzsakymopreke" + item.ID.ToString());
-                            <input type="number" id="quantity" name="quantity" min="0" value="@val">
-                            <input type="submit" class="btn btn-success" value="Įtraukti į užsakymą" />
+                            @{
+                                if (kazkas == 2 || kazkas == 3)
+                                {
+                                    using(Html.BeginForm("Process", "Prekes", new { id = item.ID, pav = item.Pavadinimas }, FormMethod.Post))
+                                    {
+                                        var val = @Accessor.HttpContext.Session.GetInt32("uzsakymopreke" + item.ID.ToString());
+                                        <input type="number" id="quantity" name="quantity" min="0" value="@val">
+                                        <input type="submit" class="btn btn-success" value="Įtraukti į užsakymą" />
+                                    }
+                                }     
                         }
+
                     </td>
                 </tr>
                 }
