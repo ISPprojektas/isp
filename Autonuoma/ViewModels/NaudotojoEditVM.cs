@@ -54,6 +54,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.ViewModels
             public string KortelesNr { get; set; }
 
             [DisplayName("Nuotraukos nuoroda")]
+            [Required]
             public string? NuotraukosLink { get; set; }
 
             [DisplayName("Telefono numeris")]
@@ -61,11 +62,13 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.ViewModels
             public string TelNr { get; set; }
 
             [DisplayName("Miestas")]
+            [Required]
             public string? Miestas { get; set; }
 
             [DisplayName("Registracijos data")]
             [DataType(DataType.Date)]
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+            [Required]
             public DateTime RegistracijosData { get; set; }
 
             [DisplayName("Tipas")]
