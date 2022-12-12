@@ -28,7 +28,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
             var user = NaudotojoRepo.FindByEmail(email);
             Console.WriteLine("email: " + email + " password: " + password + " encrypted: " + user.Naudotojas.Slaptazodis);
             HttpContext.Session.SetInt32("id", user.Naudotojas.pk_Id);
-            HttpContext.Session.SetString("privilegijos", user.Naudotojas.Privilegijos);
+            HttpContext.Session.SetInt32("privilegijos", user.Naudotojas.Privilegijos);
             if (user.Naudotojas.VerifyPassword(password,user.Naudotojas.Slaptazodis) == true)
             {
                 return RedirectToAction("Index", "Prekes");
