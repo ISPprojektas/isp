@@ -22,5 +22,19 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 		{
 			return View();
 		}
-	}
+
+        public ActionResult Login(string email, string password)
+        {
+            var user = NaudotojoRepo.FindByEmail(email);
+            Console.WriteLine("email: " + email + " password: " + password + " encrypted: " + user.Naudotojas.Slaptazodis);
+            if (user.Naudotojas.VerifyPassword(password,user.Naudotojas.Slaptazodis) == true)
+            {
+                return RedirectToAction("Index", "Prekes");
+            }
+            else
+            {
+                return Content("Incorrect email or password");
+            }
+        }
+    }
 }

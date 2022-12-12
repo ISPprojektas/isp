@@ -81,8 +81,11 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
         // Įvestą slaptažodį užencryptina ir palygina su jau esamu encrypted slaptažodžiu ir grąžina true arba false
         public bool VerifyPassword(string slaptazodis, string encryptedSlaptazodis)
         {
-            var passwordHash = EncryptPassword(slaptazodis);
-            return passwordHash == encryptedSlaptazodis;
+            using (var sha256 = SHA256.Create())
+            {
+                var slaptazodisHash = sha256.ComputeHash(Encoding.UTF8.GetBytes(slaptazodis));
+                return Convert.ToBase64String(slaptazodisHash) == encryptedSlaptazodis;
+            }
         }
     }
 }

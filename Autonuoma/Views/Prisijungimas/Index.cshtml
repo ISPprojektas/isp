@@ -5,6 +5,20 @@
             <a href="/">Pagrindinis</a>
             <br>
             <a asp-action="Index" asp-controller="Prekes">Prekių sąrašas</a>
+            <br>
+            <br>
+            <form asp-action="Login" asp-controller="Prisijungimas" method="post">
+            <label for="email">El. paštas:</label>
+            <input type="email" id="email" name="email" asp-route-email />
+            <br>
+            <br>
+            <label for="password">Slaptažodis:</label>
+            <input type="password" id="password" name="password" asp-route-password />
+            <br>
+            <br>
+            <button type="submit">Prisijungti</button>
+            </form>
+
       </div>
     </body>
 </html>
