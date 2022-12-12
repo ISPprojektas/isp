@@ -148,5 +148,51 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 						};
 				}).ToList();
 		}
+
+		public void PopulateShops(UzsakymaiBuyVM uzsakymai)
+		{
+			var parduotuves = ParduotuveRepo.List();
+
+			uzsakymai.Lists.Parduotuves =
+				parduotuves.Select(it => {
+					return
+						new SelectListItem() {
+							Value = it.ID.ToString(),
+							Text = it.Adresas
+						};
+				}).ToList();
+		}
+
+		/// <summary>
+		/// This is invoked when buying form is first opened in browser.
+		/// </summary>
+		/// <returns>Creation form view.</returns>
+		public ActionResult Buy(int id)
+		{
+			var UM = UzsakymaiRepo.Find(id);
+			var UzsakymasBVM = new UzsakymaiBuyVM();
+			UzsakymasBVM.Uzsakymai.Busena = UM.Busena;
+			UzsakymasBVM.Uzsakymai.pk_Id = UM.pk_Id;			
+			UzsakymasBVM.Uzsakymai.payment_method_selected = false;		
+			UzsakymasBVM.Uzsakymai.fk_Parduotuve = UM.fk_Parduotuve;	
+			return View(UzsakymasBVM);
+		}
+
+		/// <summary>
+		/// This is invoked when buying form is first opened in browser.
+		/// </summary>
+		/// <returns>Creation form view.</returns>
+		[HttpPost]
+		public ActionResult Buy(UzsakymaiBuyVM UzsakymasBVM, int id, int? saveMethod, int? save)
+		{
+			if (save != null) {
+				UzsakymaiRepo.UpdatePurchase(UzsakymasBVM);
+				return RedirectToAction("Index");
+			} else {
+				PopulateShops(UzsakymasBVM);
+				UzsakymasBVM.Uzsakymai.payment_method_selected = saveMethod != null ? true : false;
+			}
+			return View(UzsakymasBVM);
+		}
 	}
 }

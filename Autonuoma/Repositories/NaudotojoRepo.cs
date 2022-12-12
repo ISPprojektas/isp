@@ -104,6 +104,80 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
             return null;
         }
 
+        public static NaudotojoEditVM FindByPhone(string telnr)
+        {
+            var query = $@"SELECT * FROM `naudotojai` WHERE TelefonoNr=?telnr";
+
+            var dt =
+                Sql.Query(query, args => {
+                    args.Add("?telnr", MySqlDbType.VarChar).Value = telnr;
+                });
+
+            if (dt.Count > 0)
+            {
+                var gevm = new NaudotojoEditVM();
+
+                foreach (DataRow item in dt)
+                {
+                    gevm.Naudotojas.pk_Id = Convert.ToInt32(item["id"]);
+                    gevm.Naudotojas.Vardas = Convert.ToString(item["Vardas"]);
+                    gevm.Naudotojas.Pavarde = Convert.ToString(item["Pavardė"]);
+                    gevm.Naudotojas.ElPastas = Convert.ToString(item["ElPaštas"]);
+                    gevm.Naudotojas.Slaptazodis = Convert.ToString(item["Slaptažodis"]);
+                    gevm.Naudotojas.GimimoData = Convert.ToDateTime(item["GimimoData"]);
+                    gevm.Naudotojas.Slapyvardis = Convert.ToString(item["Slapyvardis"]);
+                    gevm.Naudotojas.KortelesNr = Convert.ToString(item["KortelėsNr"]);
+                    gevm.Naudotojas.NuotraukosLink = Convert.ToString(item["NuotraukaLink"]);
+                    gevm.Naudotojas.TelNr = Convert.ToString(item["NuotraukaLink"]);
+                    gevm.Naudotojas.Miestas = Convert.ToString(item[columnName: "Miestas"]);
+                    gevm.Naudotojas.RegistracijosData = Convert.ToDateTime(item[columnName: "Registracijos_Data"]);
+                    gevm.Naudotojas.Tipas = Convert.ToInt32(item["Tipas"]);
+                    gevm.Naudotojas.Privilegijos = Convert.ToInt32(item["Privilegijos"]);
+                }
+
+                return gevm;
+            }
+
+            return null;
+        }
+
+        public static NaudotojoEditVM FindByEmail(string email)
+        {
+            var query = $@"SELECT * FROM `naudotojai` WHERE ElPaštas=?elpastas";
+
+            var dt =
+                Sql.Query(query, args => {
+                    args.Add("?elpastas", MySqlDbType.VarChar).Value = email;
+                });
+
+            if (dt.Count > 0)
+            {
+                var gevm = new NaudotojoEditVM();
+
+                foreach (DataRow item in dt)
+                {
+                    gevm.Naudotojas.pk_Id = Convert.ToInt32(item["id"]);
+                    gevm.Naudotojas.Vardas = Convert.ToString(item["Vardas"]);
+                    gevm.Naudotojas.Pavarde = Convert.ToString(item["Pavardė"]);
+                    gevm.Naudotojas.ElPastas = Convert.ToString(item["ElPaštas"]);
+                    gevm.Naudotojas.Slaptazodis = Convert.ToString(item["Slaptažodis"]);
+                    gevm.Naudotojas.GimimoData = Convert.ToDateTime(item["GimimoData"]);
+                    gevm.Naudotojas.Slapyvardis = Convert.ToString(item["Slapyvardis"]);
+                    gevm.Naudotojas.KortelesNr = Convert.ToString(item["KortelėsNr"]);
+                    gevm.Naudotojas.NuotraukosLink = Convert.ToString(item["NuotraukaLink"]);
+                    gevm.Naudotojas.TelNr = Convert.ToString(item["NuotraukaLink"]);
+                    gevm.Naudotojas.Miestas = Convert.ToString(item[columnName: "Miestas"]);
+                    gevm.Naudotojas.RegistracijosData = Convert.ToDateTime(item[columnName: "Registracijos_Data"]);
+                    gevm.Naudotojas.Tipas = Convert.ToInt32(item["Tipas"]);
+                    gevm.Naudotojas.Privilegijos = Convert.ToInt32(item["Privilegijos"]);
+                }
+
+                return gevm;
+            }
+
+            return null;
+        }
+
         public static NaudotojoListVM FindForDeletion(string id)
         {
             var g = new NaudotojoListVM();

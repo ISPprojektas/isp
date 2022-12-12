@@ -5,6 +5,7 @@ using Org.Ktu.Isk.P175B602.Autonuoma.Repositories;
 using Org.Ktu.Isk.P175B602.Autonuoma.Models;
 using Org.Ktu.Isk.P175B602.Autonuoma.ViewModels;
 using System.Runtime.Serialization.Formatters.Binary;
+using Org.Ktu.Isk.P175B602.Autonuoma.Model;
 
 namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 {
@@ -263,5 +264,35 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 			}
 			return RedirectToAction("Index");
 		}
+
+		/// <summary>
+		/// This is invoked when product view is first opened in browser.
+		/// </summary>
+		/// <returns>Creation form view.</returns>
+		public ActionResult IndexOne(string id)
+		{
+			var PrekesOVM = PrekesRepo.FindForIndexOne(id);
+			PopulateOneLists(PrekesOVM);
+			return View(PrekesOVM);
+		}	
+
+		/// <summary>
+		/// Populates select lists used to render drop down controls.
+		/// </summary>
+		/// <param name="modelisEvm">'Automobilis' view model to append to.</param>
+		public void PopulateOneLists(
+			PrekesOneVM PrekesOVM,
+			bool save = false)
+		{
+			// //load entities for the select lists
+			var atsiliepimai = AtsiliepimaiRepo.ListOfProduct(PrekesOVM.ID);
+			Console.WriteLine(atsiliepimai.Count);
+			Console.WriteLine(atsiliepimai.Count);
+			Console.WriteLine(atsiliepimai.Count);
+			//build select lists
+			PrekesOVM.Lists.atsiliepimai =
+				atsiliepimai;
+		}
 	}
+
 }

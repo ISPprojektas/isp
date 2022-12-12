@@ -7,6 +7,7 @@ using System.Web;
 using MySql.Data.MySqlClient;
 
 using Org.Ktu.Isk.P175B602.Autonuoma.Models;
+using Org.Ktu.Isk.P175B602.Autonuoma.Model;
 using Org.Ktu.Isk.P175B602.Autonuoma.ViewModels;
 
 
@@ -56,7 +57,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 				{
 					ID = Convert.ToInt32(item["id"]),
 					Pavadinimas = Convert.ToString(item["Pavadinimas"]),
-					Kaina = Convert.ToDouble(item["Kaina"]),
+					Kaina = Convert.ToDecimal(item["Kaina"]),
 					Aprasymas = Convert.ToString(item["Aprašymas"]),
 					Patinka_paspaudimai = Convert.ToInt32(item["Patinka_paspaudimai"]),
 					Nuotrauka = Convert.ToString(item["NuotraukaLink"]),
@@ -74,9 +75,11 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 			return prekes;
 		}
 
-		public static PrekesEditVM Find(string id)
-		{
-			var query = $@"SELECT 
+		public static PrekesOneVM FindForIndexOne(string id) {
+			var prekes = new List<PrekesOneVM>();
+
+			var query =
+				$@"SELECT 
             prekės.id,
             prekės.Pavadinimas,
             Kaina,
@@ -88,13 +91,72 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
             Matmenys,
             Svoris,
             Garantijos_trukmė,
-            rūbų_dydžiai.id as 'dydis',
-            kategorijos.Sutrumpintas_pav as 'kategorija',
-            gamybos_vietos.id as 'Gamybos šalis'
+            rūbų_dydžiai.name as 'dydis',
+            kategorijos.Pavadinimas as 'kategorija',
+            gamybos_vietos.Šalis as 'Gamybos šalis'
             FROM `prekės`
             LEFT JOIN kategorijos ON kategorijos.Sutrumpintas_pav = prekės.fk_Kategorija
             LEFT JOIN rūbų_dydžiai ON rūbų_dydžiai.id = prekės.dydis
-            LEFT JOIN gamybos_vietos ON gamybos_vietos.id = prekės.fk_GamybosVieta WHERE prekės.id=?id";
+            LEFT JOIN gamybos_vietos ON gamybos_vietos.id = prekės.fk_GamybosVieta
+			WHERE prekės.id=?id";
+
+			var dt =
+				Sql.Query(query, args => {
+					args.Add("?id", MySqlDbType.Int32).Value = Convert.ToInt32(id);
+				});
+
+			foreach( DataRow item in dt )
+			{
+                string p_spalva = "Spalva: " + Convert.ToString(item["Spalva"]);
+                string p_medžiaga = "Medžiaga: " + Convert.ToString(item["Medžiaga"]);
+                string p_matmenys = "Matmenys: " + Convert.ToString(item["Matmenys"]);
+                string p_svoris = "Svoris: " + Convert.ToString(item["Svoris"]);
+                string p_garantijos_trukmė = "Garantijos trukmė: " + Convert.ToString(item["Garantijos_trukmė"]);
+                string p_dydis = "Dydis: " + Convert.ToString(item["dydis"]);
+				var preke = new PrekesOneVM
+				{
+					ID = Convert.ToInt32(item["id"]),
+					Pavadinimas = Convert.ToString(item["Pavadinimas"]),
+					Kaina = Convert.ToDecimal(item["Kaina"]),
+					Aprasymas = Convert.ToString(item["Aprašymas"]),
+					Patinka_paspaudimai = Convert.ToInt32(item["Patinka_paspaudimai"]),
+					Nuotrauka = Convert.ToString(item["NuotraukaLink"]),
+					Spalva = p_spalva,
+					Medžiaga = p_medžiaga,
+					Matmenys = p_matmenys,
+					Svoris = p_svoris,
+					Garantijos_trukmė = p_garantijos_trukmė,
+					dydis = p_dydis,
+					Kategorija = Convert.ToString(item["kategorija"]),
+					Gamybos_vieta = Convert.ToString(item["Gamybos šalis"]),
+				};
+				return preke;
+			}
+			return null;
+		}
+
+		public static PrekesEditVM Find(string id)
+		{
+			string query = $@"SELECT 
+				prekės.id,
+				prekės.Pavadinimas,
+				Kaina,
+				prekės.Aprašymas,
+				Patinka_paspaudimai,
+				prekės.NuotraukaLink,
+				Spalva,
+				Medžiaga,
+				Matmenys,
+				Svoris,
+				Garantijos_trukmė,
+				rūbų_dydžiai.id as 'dydis',
+				kategorijos.Sutrumpintas_pav as 'kategorija',
+				gamybos_vietos.id as 'Gamybos šalis'
+				FROM `prekės`
+				LEFT JOIN kategorijos ON kategorijos.Sutrumpintas_pav = prekės.fk_Kategorija
+				LEFT JOIN rūbų_dydžiai ON rūbų_dydžiai.id = prekės.dydis
+				LEFT JOIN gamybos_vietos ON gamybos_vietos.id = prekės.fk_GamybosVieta WHERE prekės.id=?id";
+			
 
 			var dt =
 				Sql.Query(query, args => {
@@ -114,7 +176,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 					int? p_dydis = !Convert.IsDBNull(item["dydis"]) ? Convert.ToInt32(item["dydis"]) : null;					
 					gevm.Prekes.ID = Convert.ToInt32(item["id"]);
 					gevm.Prekes.Pavadinimas = Convert.ToString(item["Pavadinimas"]);
-					gevm.Prekes.Kaina = Convert.ToDouble(item["Kaina"]);
+					gevm.Prekes.Kaina = Convert.ToDecimal(item["Kaina"]);
 					gevm.Prekes.Aprasymas = Convert.ToString(item["Aprašymas"]);
 					gevm.Prekes.Patinka_paspaudimai = Convert.ToInt32(item["Patinka_paspaudimai"]);
 					gevm.Prekes.Nuotrauka = Convert.ToString(item["NuotraukaLink"]);
@@ -172,7 +234,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 				string p_dydis = "Dydis: " + Convert.ToString(item["dydis"]);					
 				g.ID = Convert.ToInt32(item["id"]);
 				g.Pavadinimas = Convert.ToString(item["Pavadinimas"]);
-				g.Kaina = Convert.ToDouble(item["Kaina"]);
+				g.Kaina = Convert.ToDecimal(item["Kaina"]);
 				g.Aprasymas = Convert.ToString(item["Aprašymas"]);
 				g.Patinka_paspaudimai = Convert.ToInt32(item["Patinka_paspaudimai"]);
 				g.Nuotrauka = Convert.ToString(item["NuotraukaLink"]);
@@ -229,7 +291,6 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
                 args.Add("?kategorija", MySqlDbType.VarChar).Value = PrekesEVM.Prekes.Kategorija;
                 args.Add("?gamyba", MySqlDbType.Int32).Value = PrekesEVM.Prekes.Gamybos_vieta;
 			});
-			int aaa = 2;
 		}
 
 		public static void Update(PrekesEditVM PrekesEVM)
@@ -269,9 +330,6 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
                 args.Add("?kategorija", MySqlDbType.VarChar).Value = PrekesEVM.Prekes.Kategorija;
                 args.Add("?gamyba", MySqlDbType.Int32).Value = PrekesEVM.Prekes.Gamybos_vieta;
 			});
-            Console.WriteLine(PrekesEVM.Prekes.ID);
-            Console.WriteLine("----");
-			var aaaa = 2;
 		}
 
 		public static void Delete(string id)

@@ -1,14 +1,14 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Org.Ktu.Isk.P175B602.Autonuoma.Model;
 
 namespace Org.Ktu.Isk.P175B602.Autonuoma.ViewModels
 {
 	/// <summary>
 	/// Model of 'Klientas' entity.
 	/// </summary>
-	public class PrekesListVM
+	public class PrekesOneVM
 	{
 		[DisplayName("ID")]
 		[Required]
@@ -74,5 +74,18 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.ViewModels
 				return arr;
 			}
 		}
+
+        /// <summary>
+		/// Select lists for making drop downs for choosing values of entity fields.
+		/// </summary>
+		public class ListsM
+		{
+			public List<Atsiliepimai> atsiliepimai { get; set; }
+		}
+        
+		/// <summary>
+		/// Lists for drop down controls.
+		/// </summary>
+		public ListsM Lists { get; set; } = new ListsM();
 	}
 }
