@@ -1,0 +1,62 @@
+@model Org.Ktu.Isk.P175B602.Autonuoma.Model.Atsiliepimai
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+@{
+	ViewData["title"] = "Komentaro kūrimas";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <fieldset class="border rounded shadow p-2">
+
+
+        <div class="form-group">
+			@Html.LabelFor(m => m.Autorius, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Autorius, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Autorius, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Ivertinimas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Ivertinimas, new {  @class = "form-control"  })
+			@Html.ValidationMessageFor(m => m.Ivertinimas, "", new { @class = "text-danger" })
+		</div>
+        <div class="form-group">
+			@Html.LabelFor(m => m.Atsiliepimo_Tekstas, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Atsiliepimo_Tekstas, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(m => m.Atsiliepimo_Tekstas, "", new { @class = "text-danger" })
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Nuotraukos_Link, new { @class = "control-label" })
+			@Html.EditorFor(m => m.Nuotraukos_Link, new { @class = "form-control"})
+			@Html.ValidationMessageFor(m => m.Nuotraukos_Link, "", new { @class = "text-danger" })
+		</div>
+
+        <div class="form-group">
+			@Html.HiddenFor(m => m.fk_Preke, new { @class = "form-control"})
+		</div>
+		<div class="form-group">
+			@Html.HiddenFor(m => m.Data, new { @class = "form-control"})
+		</div>
+
+    </fieldset>
+    <div class="container-fluid d-flex d-row justify-content-center">
+        <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-credit-card"></i> Rašyti komentarą</button>
+    </div>
+    
+}
+</div>

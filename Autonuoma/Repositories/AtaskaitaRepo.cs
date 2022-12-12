@@ -11,9 +11,9 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 	#nullable enable
 	public class AtaskaitaRepo
 	{
-		public static Dictionary<string, List<StoresReport.Ataskaita.Parduotuve>> GetStores(DateTime? dateFrom, DateTime? dateTo, int? rusis, double? kainaFrom, double? kainaTo)
+		public static Dictionary<string, List<StoresReport.Ataskaita.Parduotuves>> GetStores(DateTime? dateFrom, DateTime? dateTo, int? rusis, double? kainaFrom, double? kainaTo)
 		{
-			var result = new Dictionary<string, List<StoresReport.Ataskaita.Parduotuve>>();
+			var result = new Dictionary<string, List<StoresReport.Ataskaita.Parduotuves>>();
 
 			var query =
 				$@"SELECT 
@@ -211,9 +211,9 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 				string FkParduotuveToString = Convert.ToString(item["parduotuve_s"]);
 				if(!result.ContainsKey(FkParduotuve + " " + FkParduotuveToString))
 				{
-					result[FkParduotuve + " " + FkParduotuveToString] = new List<StoresReport.Ataskaita.Parduotuve>();
+					result[FkParduotuve + " " + FkParduotuveToString] = new List<StoresReport.Ataskaita.Parduotuves>();
 				}
-				result[FkParduotuve + " " + FkParduotuveToString].Add(new StoresReport.Ataskaita.Parduotuve
+				result[FkParduotuve + " " + FkParduotuveToString].Add(new StoresReport.Ataskaita.Parduotuves
 				{
 					GyvunoID = Convert.ToString(item["gyvuno_id"]),
 					GyvunoVardas = Convert.ToString(item["gyvuno_vardas"]),

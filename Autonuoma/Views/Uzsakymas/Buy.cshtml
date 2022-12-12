@@ -1,0 +1,67 @@
+@model Org.Ktu.Isk.P175B602.Autonuoma.Model.UzsakymaiBuyVM
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+@{
+	ViewData["title"] = "Užsakymo apmokėjimas";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+	</span>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm())
+{
+    @if(!Model.Uzsakymai.payment_method_selected) {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <fieldset class="border rounded shadow p-2">
+            <div class="form-group">
+                @Html.HiddenFor(m => m.Uzsakymai.pk_Id, new { @class = "control-label" })
+            </div>
+
+            <div class="form-group">
+                @Html.HiddenFor(m => m.Uzsakymai.payment_method_selected, new { @class = "control-label" })
+            </div>
+            <div class="form-group">
+                @Html.HiddenFor(m => m.Uzsakymai.fk_Parduotuve, new { @class = "control-label" })
+            </div>
+            <div class="form-group">            
+                <label>Pasirinkite mokėjimo būdą</label>
+            </div>
+        </fieldset>
+        <div class="container-fluid d-flex d-row justify-content-center">
+            <button name="saveMethod" value="1" class="btn btn-success"><i class="fa-solid fa-credit-card"></i> Kortele</button>
+        </div>
+    } else {
+        <fieldset class="border rounded shadow p-2">
+            <div class="form-group">
+                @Html.HiddenFor(m => m.Uzsakymai.pk_Id, new { @class = "control-label" })
+            </div>
+
+            <div class="form-group">
+                @Html.HiddenFor(m => m.Uzsakymai.payment_method_selected, new { @class = "control-label" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Uzsakymai.korteles_nr, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Uzsakymai.korteles_nr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Uzsakymai.korteles_nr, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                Parduotuvė, kurioje norima atsiimti užsakymą
+                @Html.DropDownListFor(m => m.Uzsakymai.fk_Parduotuve, Model.Lists.Parduotuves, "--------------", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Uzsakymai.fk_Parduotuve, "", new { @class = "text-danger" })
+            </div>
+        </fieldset>
+        <div class="container-fluid d-flex d-row justify-content-end">
+            <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-dollar-sign"></i> Apmokėti užsakymą</button>
+        </div>
+    }	
+}
+</div>

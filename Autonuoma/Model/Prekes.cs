@@ -13,9 +13,8 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
 		public string Pavadinimas { get; set; }
 
         [DisplayName("Kaina")]
-        [Required]
-        [DisplayFormat(DataFormatString = "{0:n2}")]
-        public double Kaina { get; set; }
+        [Required][DisplayFormat(DataFormatString = "{0:#0.00}", ApplyFormatInEditMode =true)]
+        public decimal Kaina { get; set; }
 
 		[DisplayName("Aprašymas")]
 		[Required]

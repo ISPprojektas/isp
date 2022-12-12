@@ -102,6 +102,8 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 			return uzsakymai;
 		}
 
+
+
         /*
 		public static List<uzsakymai> ListForMiestas(string miestas)
 		{
@@ -267,6 +269,25 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 				args.Add("?gyv", MySqlDbType.VarChar).Value = uzsakymaiM.FkGyvunas;
 			});
 		}*/
+
+		public static void UpdatePurchase(UzsakymaiBuyVM uzsakymas)
+		{
+			var query =
+				$@"UPDATE `užsakymai`
+				SET
+                    Apmokėjimo_laikas=?laikas,
+                    Būsena=?busena,
+					fk_Parduotuvė=?pard
+				WHERE
+					id=?id";
+
+			Sql.Update(query, args => {
+                args.Add("?laikas", MySqlDbType.DateTime).Value = DateTime.Now;
+				args.Add("?busena", MySqlDbType.Int32).Value = 2;
+				args.Add("?id", MySqlDbType.Int32).Value = uzsakymas.Uzsakymai.pk_Id;
+				args.Add("?pard", MySqlDbType.Int32).Value = uzsakymas.Uzsakymai.fk_Parduotuve;
+			});
+		}
 
 		public static void Update(Uzsakymai uzsakymas)
 		{

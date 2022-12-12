@@ -88,7 +88,9 @@
 						<a href="@Url.Action("Delete", new { id=item.pk_Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
 				</td>
 				<td>
-						<a href="@Url.Action("Buy", "Prekes", new { id=item.pk_Id })" class="btn btn-success"><i class="fa-solid fa-dollar-sign"></i> Apmokėti</a>
+				@if (item.Busena == 1) {
+					<a href="@Url.Action("Buy", new { id=item.pk_Id })" class="btn btn-success"><i class="fa-solid fa-dollar-sign"></i> Apmokėti</a>
+				}
 				</td>
 				</tr>
 				<tr>

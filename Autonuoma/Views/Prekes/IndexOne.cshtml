@@ -1,0 +1,81 @@
+@model Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.PrekesOneVM
+@{
+	ViewData["title"] = "Prekės peržiūra";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main-content-header container-fluid d-flex d-row justify-content-between align-models-center p-2">
+        <span class="title">@ViewData["title"]</span>
+</div>
+    <div>
+        <p>Prekių sąrašas</p>
+        <a href="/">Pagrindinis</a>
+        <br></br>
+        <a asp-action="Index" asp-controller="AdministratoriausPuslapis">Administratoriaus puslapis</a>
+        <br></br>
+        <a asp-action="Index" asp-controller="Klientas">Kliento profilis</a>
+        <br/>
+        <a asp-action="Index" asp-controller="Preke">Prekės peržiūra</a>
+    </div>
+    <div class="d-flex justify-content-center" style="flex-direction:column; align-items:center">
+        <div class="col-md-4" style="border: 1px solid gray; padding: 10px">  
+            <img style="height: 100px" src="@Model.Nuotrauka">       <br/>          
+            Prekės @Html.DisplayNameFor(model => model.ID): 
+            @Html.DisplayFor(model => model.ID)<br/>          
+        
+            @Html.DisplayFor(model => model.Pavadinimas)  <br/>                   
+        
+            @Html.DisplayNameFor(model => model.Kaina):
+            @Html.DisplayFor(model => model.Kaina) €    <br/>                 
+        
+            @Html.DisplayNameFor(model => model.Aprasymas):
+            @Html.DisplayFor(model => model.Aprasymas)   <br/>                  
+        
+            @Html.DisplayNameFor(model => model.Patinka_paspaudimai):
+            @Html.DisplayFor(model => model.Patinka_paspaudimai)         <br/>                 
+        
+            @foreach (var savybe in Model.Savybes)
+            {                            
+                @Html.DisplayFor(model => savybe)<br/>
+            }                
+        
+            @Html.DisplayNameFor(model => model.Kategorija):
+            @Html.DisplayFor(model => model.Kategorija)        <br/>             
+        
+            @Html.DisplayNameFor(model => model.Gamybos_vieta):
+            @Html.DisplayFor(model => model.Gamybos_vieta)       <br/>              
+        
+        </div>
+    <a href="@Url.Action("Create", "Komentaras", new { id=Model.ID })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Parašyti komentarą</a>
+    Atsiliepimai
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="col-md-4" style="border: 2px solid gray; padding: 10px">  
+            @if (Model.Lists.atsiliepimai.Count > 0) {
+                @foreach (var item in Model.Lists.atsiliepimai)
+                {
+                    <div style="border: 1px solid gray; padding: 10px">
+                        <b>@Html.DisplayNameFor(model => item.Autorius)</b>
+                        <p>@Html.DisplayFor(model => item.Autorius)</p>
+                        <p><b>@Html.DisplayNameFor(model => item.Data)</b> @Html.DisplayFor(model => item.DataF)</p>
+                        <p><b>@Html.DisplayNameFor(model => item.Ivertinimas)</b> @Html.DisplayFor(model => item.Ivertinimas)</p>
+                        <b>@Html.DisplayNameFor(model => item.Atsiliepimo_Tekstas)</b>
+                        <p>@Html.DisplayFor(model => item.Atsiliepimo_Tekstas)</p>
+                        <img style="height: 100px" src="@item.Nuotraukos_Link">
+                    </div>                    
+                }    
+            } else {
+                <p>Komentarų nėra.</p>
+            }
+        </div>
+    </div>
+</body>
+</html>

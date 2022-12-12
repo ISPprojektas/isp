@@ -98,6 +98,8 @@
                         @Html.DisplayFor(model => item.Gamybos_vieta)
                     </td>
                     <td>
+                        <a href="@Url.Action("IndexOne", new { id = item.ID })" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Peržiūrėti detaliau</a>
+                        <br/>
                         <a href="@Url.Action("Edit", new { id = item.ID})" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
                         <a href="@Url.Action("Delete", new { id = item.ID})" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
                         <br>
