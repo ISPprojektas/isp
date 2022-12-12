@@ -82,43 +82,46 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayNameFor(model => model.Vardas)
+                            @Html.DisplayFor(model => item.pk_Id)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.Pavarde)
+                            @Html.DisplayFor(model => item.Vardas)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.ElPastas)
+                            @Html.DisplayFor(model => item.Pavarde)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.Slaptazodis)
+                            @Html.DisplayFor(model => item.ElPastas)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.GimimoData)
+                            @Html.DisplayFor(model => item.Slaptazodis)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.Slapyvardis)
+                            @Html.DisplayFor(model => item.GimimoData)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.KortelesNr)
+                            @Html.DisplayFor(model => item.Slapyvardis)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.NuotraukosLink)
+                            @Html.DisplayFor(model => item.KortelesNr)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.TelNr)
+                            @Html.DisplayFor(model => item.NuotraukosLink)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.Miestas)
+                            @Html.DisplayFor(model => item.TelNr)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.RegistracijosData)
+                            @Html.DisplayFor(model => item.Miestas)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.Tipas)
+                            @Html.DisplayFor(model => item.RegistracijosData)
                         </td>
                         <td>
-                            @Html.DisplayNameFor(model => model.Privilegijos)
+                            @Html.DisplayFor(model => item.Tipas)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Privilegijos)
                         </td>
                         <td>
                             <a href="@Url.Action("Edit", new { id = item.pk_Id })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
