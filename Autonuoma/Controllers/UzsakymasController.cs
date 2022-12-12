@@ -20,7 +20,10 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 		/// <returns>Entity list view.</returns>
 		public ActionResult Index()
 		{
-			var uzsakymai = UzsakymaiRepo.List();
+			int id = -1;
+			if (HttpContext.Session.GetInt32("id") != null)
+				id = (int)HttpContext.Session.GetInt32("id");
+			var uzsakymai = UzsakymaiRepo.List(id);
 			return View(uzsakymai);
 		}
 
@@ -47,10 +50,11 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
 			{
 					if( ModelState.IsValid )
 					{
+						int id = (int)HttpContext.Session.GetInt32("id");
 						var curr1 = HttpContext.Session.GetString("cart1");
 						var curr2 = HttpContext.Session.GetString("cart2");
 						var curr3 = HttpContext.Session.GetString("cart3");
-						UzsakymaiRepo.Insert(Uzsakymas, curr1, curr2, curr3);
+						UzsakymaiRepo.Insert(Uzsakymas, curr1, curr2, curr3, id);
 						//save success, go back to the entity list
 						return RedirectToAction("Index");
 					}

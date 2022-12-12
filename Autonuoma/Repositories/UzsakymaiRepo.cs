@@ -18,10 +18,11 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 	/// </summary>
 	public class UzsakymaiRepo
 	{
-		public static List<Uzsakymai> List()
+		public static List<Uzsakymai> List(int id = -1)
 		{
 			var uzsakymai = new List<Uzsakymai>();
 
+			// Console.WriteLine($"id {id}");
 			var query =
 				$@"SELECT
                     uz.id,
@@ -41,16 +42,23 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 					`{Config.TblPrefix}užsakymai` uz
 					LEFT JOIN `{Config.TblPrefix}naudotojai` nau ON uz.fk_Naudotojas=nau.id
                     LEFT JOIN `{Config.TblPrefix}parduotuvės` par ON uz.fk_Parduotuvė=par.id
-                    LEFT JOIN `{Config.TblPrefix}užsakymo_būsenos` ub ON uz.Būsena=ub.id
-				ORDER BY uz.id ASC";
-
-			var dt = Sql.Query(query);
-
+                    LEFT JOIN `{Config.TblPrefix}užsakymo_būsenos` ub ON uz.Būsena=ub.id";
+			DataRowCollection dt;
+			if (id != -1) {
+				query += @" WHERE uz.fk_Naudotojas = ?id";
+				query +=@" ORDER BY uz.id ASC";
+				dt = Sql.Query(query, args => {
+					args.Add("?id", MySqlDbType.Int32).Value = id;
+				});
+			} else {
+				query +=@" ORDER BY uz.id ASC";
+				dt = Sql.Query(query);
+			}
             
 			foreach( DataRow item in dt )
 			{
                 var up = new List<UzsakymoPrekes>();
-
+				// Console.WriteLine($"q1 {item["id"]}");
                 var query2 =
 				$@"SELECT
                     up.Prekės_kiekis,
@@ -69,6 +77,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
                 
                 foreach( DataRow item2 in dt2 )
                 {
+					// Console.WriteLine($"q2 {item2["fk_Užsakymas"]}");
                     up.Add(new UzsakymoPrekes
                     {
                         PrekesKiekis = Convert.ToInt32(item2["Prekės_kiekis"]),
@@ -312,7 +321,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 			});
 		}
 
-		public static void Insert(Uzsakymai uzsakymas, string curr1, string curr2, string curr3)
+		public static void Insert(Uzsakymai uzsakymas, string curr1, string curr2, string curr3, int userid)
 		{
 			var query =
 				$@"INSERT INTO `užsakymai` 
@@ -330,7 +339,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 
 			var id = Sql.Insert(query, args => {
 				//args.Add("?naud", MySqlDbType.Int32).Value = uzsakymas.fk_Naudotojas;
-				args.Add("?naud", MySqlDbType.Int32).Value = 1;
+				args.Add("?naud", MySqlDbType.Int32).Value = userid;
 				//args.Add("?pard", MySqlDbType.Int32).Value = uzsakymas.fk_Parduotuve;
 				args.Add("?pard", MySqlDbType.Int32).Value = 1;
 			});
