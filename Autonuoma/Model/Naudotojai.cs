@@ -30,7 +30,8 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
         }
 
         [DisplayName("Gimimo data")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [Required]
         public DateTime GimimoData { get; set; }
 
@@ -43,16 +44,17 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Model
         public string KortelesNr { get; set; }
 
         [DisplayName("Nuotraukos nuoroda")]
-        public string NuotraukosLink { get; set; }
+        public string? NuotraukosLink { get; set; }
 
         [DisplayName("Telefono numeris")]
         public string TelNr { get; set; }
 
         [DisplayName("Miestas")]
-        public string Miestas { get; set; }
+        public string? Miestas { get; set; }
 
         [DisplayName("Registracijos data")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime RegistracijosData { get; set; }
 
         [DisplayName("Tipas")]

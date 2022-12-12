@@ -98,20 +98,6 @@
 		</fieldset>
 
 		<fieldset class="border rounded shadow p-2">
-			<div class="container-fluid d-flex d-row justify-content-between align-items-center">
-				<span></span>
-				<legend style="width: unset; margin-bottom: 0px;">Papildoma informacija</legend>
-				<button name="add"
-					value="1"
-					formnovalidate @*ASP.NET Core magic attribute to prevent client side validation when submit button is clicked*@
-					formaction="@Url.Action()#listEnd"
-					class="btn btn-info"
-					style="white-space: nowrap;">
-					<i class="fa-solid fa-plus"></i> Pridėti darbo laiką
-				</button>
-			</div>
-
-
 			@* this is used as a marker to automatically scroll down to the end of items list when returning from button presses *@
 			<span id="listEnd"></span>
 		</fieldset>
