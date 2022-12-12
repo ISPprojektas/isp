@@ -54,7 +54,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Controllers
             if (save != null)
             {
 
-                var duplicate = PrekesRepo.Exists(naudotojasEVM.Naudotojas.pk_Id);
+                var duplicate = NaudotojoRepo.Exists(naudotojasEVM.Naudotojas.pk_Id);
                 if (duplicate)
                 {
                     ModelState.First(m => m.Key == "Naudotojas.pk_Id").Value.Errors.Add("Duplikatas");

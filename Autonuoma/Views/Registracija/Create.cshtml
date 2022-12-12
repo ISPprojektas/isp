@@ -1,0 +1,102 @@
+﻿@model Org.Ktu.Isk.P175B602.Autonuoma.ViewModels.NaudotojoEditVM
+@{
+	ViewData["title"] = "Naudotojo sukūrimas";
+}
+
+<div class="container-fluid d-flex justify-content-center">
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+			<fieldset class="border rounded shadow p-2">
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.Vardas, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.Vardas, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.Vardas, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.Pavarde, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.Pavarde, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.Pavarde, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.ElPastas, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.ElPastas, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.ElPastas, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.Slaptazodis, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.Slaptazodis, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.Slaptazodis, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.GimimoData, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.GimimoData, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.GimimoData, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.Slapyvardis, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.Slapyvardis, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.Slapyvardis, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.KortelesNr, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.KortelesNr, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.KortelesNr, "", new { @class = "text-danger" })
+				</div>
+
+					<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.NuotraukosLink, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.NuotraukosLink, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.NuotraukosLink, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.TelNr, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.TelNr, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.TelNr, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.Miestas, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.Miestas, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.Miestas, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.RegistracijosData, new { @class = "control-label" })
+				@Html.EditorFor(m => m.Naudotojas.RegistracijosData, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(m => m.Naudotojas.RegistracijosData, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.Tipas, new { @class = "control-label" })
+				@Html.DropDownListFor(m => m.Naudotojas.Tipas, Model.Lists.KlientoTipai, "--------------", new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Naudotojas.Tipas, "", new { @class = "text-danger" })
+				</div>
+
+				<div class="form-group">
+				@Html.LabelFor(m => m.Naudotojas.Privilegijos, new { @class = "control-label" })
+				@Html.DropDownListFor(m => m.Naudotojas.Privilegijos, Model.Lists.NaudotojoPrivilegijos, "--------------", new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Naudotojas.Privilegijos, "", new { @class = "text-danger" })
+				</div>
+			</fieldset>
+
+			<fieldset class="border rounded shadow p-2">
+			@* this is used as a marker to automatically scroll down to the end of items list when returning from button presses *@
+				<span id="listEnd"></span>
+			</fieldset>
+
+			<div class="container-fluid d-flex d-row justify-content-end">
+				<button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Registruotis</button>
+			</div>
+	}
+</div>
