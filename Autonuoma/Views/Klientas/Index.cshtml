@@ -30,13 +30,17 @@
     <div>
         <p>Kliento profilio puslapis</p>
         <br></br>
-        <p>Kliento atnaujinimo puslapis</p>
-        <a asp-action="Edit" asp-controller="Klientas">Kliento atnaujinimas</a>
+        @{
+            var editVar = Context.Session.GetInt32("id");
+            <a href="/Naudotojas/Edit/@editVar">Kliento atnaujinimo puslapis</a>
+        }
         <br></br>
-        <p>Kliento naikinimo puslapis</p>
-        <a asp-action="Delete" asp-controller="Klientas">Kliento naikinimas</a>
         <br></br>
-        <p>Užsakymų peržiūros puslapis</p>
+        @{
+            var deleteVar = Context.Session.GetInt32("id");
+            <a href="/Naudotojas/Delete/@deleteVar">Kliento naikinimo puslapis</a>
+        }
+        <br></br>
         <div class="main-content-footer container-fluid d-flex d-row align-items-center">
             <span class="title"></span>
             <span class="actions">

@@ -1,3 +1,4 @@
+@using System.Web;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +14,17 @@
         <br></br>
         <a asp-action="Generate" asp-controller="Ataskaita">Užsakymų ataskaitos generavimas</a>
         <br></br>
-        <a asp-action="Create" asp-controller="Klientas">Kliento kūrimas</a>
+        @{
+            var kazkas = Context.Session.GetInt32("privilegijos");
+            if (kazkas == 2)
+            {
+                <a href="/Naudotojas/Create">Naudotojo kūrimo puslapis</a>
+            }
+            else
+            {
+                <p> Neturite pakankamų teisių, jog galėtumete kurti naudotojus</p>
+            }
+        }
         <br></br>
       </div>
 </body>
