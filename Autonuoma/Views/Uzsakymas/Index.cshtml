@@ -49,6 +49,9 @@
 				<th>
 						Šalinti 
 				</th>
+				<th>
+					Apmokėti
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -84,16 +87,20 @@
 				<td>
 						<a href="@Url.Action("Delete", new { id=item.pk_Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
 				</td>
+				<td>
+						<a href="@Url.Action("Buy", "Prekes", new { id=item.pk_Id })" class="btn btn-success"><i class="fa-solid fa-dollar-sign"></i> Apmokėti</a>
+				</td>
 				</tr>
 				<tr>
 						<td>Prekės:</td>
-						<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+						<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
 						<td>Pavadinimas</td>
 						<td>Kiekis</td>
 						<td>Vieneto kaina</td>
 						<td>Kaina</td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -122,10 +129,12 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
 					</tr>
 				}
 				<tr class="table-success">
 					<td>Galinė kaina: @item.GalineKaina()</td>
+					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>

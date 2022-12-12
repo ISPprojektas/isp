@@ -2,6 +2,8 @@
 @{
 	ViewData["title"] = "Prekės";
 }
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +28,7 @@
         <br></br>
         <a asp-action="Index" asp-controller="Klientas">Kliento profilis</a>
         <br/>
-        <a asp-action="Index" asp-controller="Preke">Prekės peržiūra</a>
+        <a asp-action="Create" asp-controller="Uzsakymas">Užsakymo kūrimas</a>
     </div>
     <div class="d-flex justify-content-center">
         <table class="entitylist table table-striped table-hover">
@@ -96,8 +98,15 @@
                         @Html.DisplayFor(model => item.Gamybos_vieta)
                     </td>
                     <td>
-                        <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
-                        <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+                        <a href="@Url.Action("Edit", new { id = item.ID})" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
+                        <a href="@Url.Action("Delete", new { id = item.ID})" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+                        <br>
+                        @using(Html.BeginForm("Process", "Prekes", new { id = item.ID, pav = item.Pavadinimas }, FormMethod.Post))
+                        {
+                            var val = @Accessor.HttpContext.Session.GetInt32("uzsakymopreke" + item.ID.ToString());
+                            <input type="number" id="quantity" name="quantity" min="0" value="@val">
+                            <input type="submit" class="btn btn-success" value="Įtraukti į užsakymą" />
+                        }
                     </td>
                 </tr>
                 }

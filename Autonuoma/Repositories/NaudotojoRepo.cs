@@ -23,7 +23,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 
             var query =
                 $@"SELECT 
-            id,
+            naudotojai.id,
             Vardas,
             Pavardė,
             ElPaštas,
@@ -35,8 +35,8 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
             TelefonoNr,
             Miestas,
             Registracijos_Data, 
-            kliento_tipai.name as 'Kliento tipas',
-            naudotojo_privilegijos.name as 'Privilegijos'
+            kliento_tipai.id as 'Kliento tipas',
+            naudotojo_privilegijos.id as 'Privilegijos'
             FROM `naudotojai`
             LEFT JOIN kliento_tipai ON kliento_tipai.id = naudotojai.Tipas
             LEFT JOIN naudotojo_privilegijos ON naudotojo_privilegijos.id = naudotojai.Privilegijos";
@@ -56,9 +56,9 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
                     Slapyvardis = Convert.ToString(item["Slapyvardis"]),
                     KortelesNr = Convert.ToString(item["KortelėsNr"]),
                     NuotraukosLink = Convert.ToString(item["NuotraukaLink"]),
-                    TelNr = Convert.ToString(item["NuotraukosLink"]),
+                    TelNr = Convert.ToString(item["TelefonoNr"]),
                     Miestas = Convert.ToString(item[columnName: "Miestas"]),
-                    RegistracijosData = Convert.ToDateTime(item[columnName: "Registracijos_Data"]),
+                    RegistracijosData = Convert.ToDateTime(item["Registracijos_Data"]),
                     Tipas = Convert.ToInt32(item["Kliento tipas"]),
                     Privilegijos = Convert.ToInt32(item["Privilegijos"]),
                 });
@@ -69,7 +69,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 
         public static NaudotojoEditVM Find(string id)
         {
-            var query = $@"SELECT * FROM `naudotojai` WHERE kodas=?id";
+            var query = $@"SELECT * FROM `naudotojai` WHERE id=?id";
 
             var dt =
                 Sql.Query(query, args => {
@@ -82,7 +82,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 
                 foreach (DataRow item in dt)
                 {
-                    gevm.Naudotojas.pk_Id = Convert.ToInt32(item["kodas"]);
+                    gevm.Naudotojas.pk_Id = Convert.ToInt32(item["id"]);
                     gevm.Naudotojas.Vardas = Convert.ToString(item["Vardas"]);
                     gevm.Naudotojas.Pavarde = Convert.ToString(item["Pavardė"]);
                     gevm.Naudotojas.ElPastas = Convert.ToString(item["ElPaštas"]);
@@ -91,10 +91,10 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
                     gevm.Naudotojas.Slapyvardis = Convert.ToString(item["Slapyvardis"]);
                     gevm.Naudotojas.KortelesNr = Convert.ToString(item["KortelėsNr"]);
                     gevm.Naudotojas.NuotraukosLink = Convert.ToString(item["NuotraukaLink"]);
-                    gevm.Naudotojas.TelNr = Convert.ToString(item["NuotraukosLink"]);
+                    gevm.Naudotojas.TelNr = Convert.ToString(item["NuotraukaLink"]);
                     gevm.Naudotojas.Miestas = Convert.ToString(item[columnName: "Miestas"]);
                     gevm.Naudotojas.RegistracijosData = Convert.ToDateTime(item[columnName: "Registracijos_Data"]);
-                    gevm.Naudotojas.Tipas = Convert.ToInt32(item["Kliento tipas"]);
+                    gevm.Naudotojas.Tipas = Convert.ToInt32(item["Tipas"]);
                     gevm.Naudotojas.Privilegijos = Convert.ToInt32(item["Privilegijos"]);
                 }
 
@@ -110,7 +110,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 
             var query =
                 $@"SELECT 
-            id,
+            naudotojai.id,
             Vardas,
             Pavardė,
             ElPaštas,
@@ -122,8 +122,8 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
             TelefonoNr,
             Miestas,
             Registracijos_Data, 
-            kliento_tipai.name as 'Kliento tipas',
-            naudotojo_privilegijos.name as 'Privilegijos'
+            kliento_tipai.id as 'Kliento tipas',
+            naudotojo_privilegijos.id as 'Privilegijos'
             FROM `naudotojai`
             LEFT JOIN kliento_tipai ON kliento_tipai.id = naudotojai.Tipas
             LEFT JOIN naudotojo_privilegijos ON naudotojo_privilegijos.id = naudotojai.Privilegijos";
@@ -144,7 +144,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
                 g.Slapyvardis = Convert.ToString(item["Slapyvardis"]);
                 g.KortelesNr = Convert.ToString(item["KortelėsNr"]);
                 g.NuotraukosLink = Convert.ToString(item["NuotraukaLink"]);
-                g.TelNr = Convert.ToString(item["NuotraukosLink"]);
+                g.TelNr = Convert.ToString(item["NuotraukaLink"]);
                 g.Miestas = Convert.ToString(item[columnName: "Miestas"]);
                 g.RegistracijosData = Convert.ToDateTime(item[columnName: "Registracijos_Data"]);
                 g.Tipas = Convert.ToInt32(item["Kliento tipas"]);
@@ -177,7 +177,7 @@ namespace Org.Ktu.Isk.P175B602.Autonuoma.Repositories
 					?miestas,
 					?regdata,
 					?tipas,
-					?priv,
+					?priv
 				)";
 
             var scc = Sql.Insert(query, args => {
